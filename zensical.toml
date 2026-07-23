@@ -1,0 +1,66 @@
+[project]
+
+site_name = "fastfields"
+site_description = "Fast, stride-aware scalar & vector field operators (CPU/CUDA) with numpy, torch and cupy bindings."
+site_author = "Yaël Balbastre"
+site_url = "https://fastfields.github.io/"
+repo_url = "https://github.com/fastfields/fastfields.github.io"
+repo_name = "fastfields/fastfields.github.io"
+
+copyright = """
+Copyright &copy; 2026 The fastfields authors
+"""
+
+# The org landing page. Home is prose; the rest of the nav points OUT to each
+# package's own API site (published at fastfields.github.io/<repo>/) and to the
+# wheel index.
+nav = [
+  {"Home" = "index.md"},
+  {"Packages" = [
+    {"fastfields (any)" = "https://fastfields.github.io/fastfields/"},
+    {"fastfields.numpy" = "https://fastfields.github.io/fastfields-numpy/"},
+    {"fastfields.torch" = "https://fastfields.github.io/fastfields-torch/"},
+    {"fastfields.cupy" = "https://fastfields.github.io/fastfields-cupy/"},
+    {"fastfields.dlpack" = "https://fastfields.github.io/fastfields-bind-py/"},
+    {"libfastfields (C++)" = "https://fastfields.github.io/fastfields-lib/"},
+  ]},
+  {"Wheel index" = "https://fastfields.github.io/whl/"},
+]
+
+[project.theme]
+
+language = "en"
+
+features = [
+  "content.code.copy",
+  "content.code.select",
+  "navigation.indexes",
+]
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+[project.theme.icon]
+logo = "material/waves"
+repo = "fontawesome/brands/github"
+
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true
+[project.markdown_extensions.tables]
+[project.markdown_extensions.toc]
+toc_depth = 3
