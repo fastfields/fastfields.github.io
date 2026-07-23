@@ -14,9 +14,9 @@ Pick the build that matches your hardware from the
 from PyPI, so pass it as an `--extra-index-url`):
 
 ```sh
-# CUDA 12.4
+# CUDA 12.8
 pip install fastfields fastfields-torch \
-    --extra-index-url https://fastfields.github.io/whl/cu124/
+    --extra-index-url https://fastfields.github.io/whl/cu128/
 
 # CPU only
 pip install fastfields fastfields-numpy \
