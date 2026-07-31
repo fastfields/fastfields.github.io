@@ -59,10 +59,10 @@ autograd on PyTorch and CUDA streams on CuPy.
 
 | install | import | docs |
 |---|---|---|
-| `fastfields` | `fastfields.any` | [API](https://fastfields.github.io/fastfields/) |
-| `fastfields-numpy` | `fastfields.numpy` | [API](https://fastfields.github.io/fastfields-numpy/) |
-| `fastfields-torch` | `fastfields.torch` | [API](https://fastfields.github.io/fastfields-torch/) |
-| `fastfields-cupy` | `fastfields.cupy` | [API](https://fastfields.github.io/fastfields-cupy/) |
+| `fastfields` | `fastfields.any` | [](https://fastfields.github.io/fastfields/) |
+| `fastfields-numpy` | `fastfields.numpy` | [](https://fastfields.github.io/fastfields-numpy/) |
+| `fastfields-torch` | `fastfields.torch` | [](https://fastfields.github.io/fastfields-torch/) |
+| `fastfields-cupy` | `fastfields.cupy` | [](https://fastfields.github.io/fastfields-cupy/) |
 
 Install only the backends you need — they share the `fastfields` namespace and
 merge into one import.
