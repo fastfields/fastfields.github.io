@@ -32,9 +32,9 @@ a:where(
 }
 
 a[href$="fastfields.github.io/fastfields/"] { --link-icon: var(--icon-any); }
-a[href$="fastfields.github.io/fastfields/-numpy/"] { --link-icon: var(--icon-numpy); }
-a[href$="fastfields.github.io/fastfields/-cupy/"] { --link-icon: var(--icon-cupy); }
-a[href$="fastfields.github.io/fastfields/-torch/"] { --link-icon: var(--icon-pytorch); }
-a[href$="fastfields.github.io/fastfields/-dlpack/"] { --link-icon: var(--icon-dlpack); }
-a[href$="fastfields.github.io/fastfields/-lib/"] { --link-icon: var(--icon-lib); }
+a[href$="fastfields.github.io/fastfields-numpy/"] { --link-icon: var(--icon-numpy); }
+a[href$="fastfields.github.io/fastfields-cupy/"] { --link-icon: var(--icon-cupy); }
+a[href$="fastfields.github.io/fastfields-torch/"] { --link-icon: var(--icon-pytorch); }
+a[href$="fastfields.github.io/fastfields-dlpack/"] { --link-icon: var(--icon-dlpack); }
+a[href$="fastfields.github.io/fastfields-lib/"] { --link-icon: var(--icon-lib); }
 a[href$="fastfields.github.io/whl/"] { --link-icon: var(--icon-wheels); }
