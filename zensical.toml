@@ -1,5 +1,7 @@
 [project]
 
+extra_css = ["stylesheets/extra.css"]
+
 site_name = "fastfields"
 site_description = "Fast, stride-aware scalar & vector field operators (CPU/CUDA) with numpy, torch and cupy bindings."
 site_author = "Yaël Balbastre"
