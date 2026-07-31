@@ -16,15 +16,15 @@ Copyright &copy; 2026 The fastfields authors
 # wheel index.
 nav = [
   {"Home" = "index.md"},
-  {"Packages" = [
+  {":fontawesome-solid-box-open: Packages" = [
     {"fastfields.any" = "https://fastfields.github.io/fastfields/"},
-    {"fastfields.numpy" = "https://fastfields.github.io/fastfields-numpy/"},
-    {"fastfields.torch" = "https://fastfields.github.io/fastfields-torch/"},
-    {"fastfields.cupy" = "https://fastfields.github.io/fastfields-cupy/"},
-    {"fastfields.dlpack" = "https://fastfields.github.io/fastfields-bind-py/"},
-    {"libfastfields (C++)" = "https://fastfields.github.io/fastfields-lib/"},
+    {":simple-numpy: fastfields.numpy" = "https://fastfields.github.io/fastfields-numpy/"},
+    {":simple-pytorch: fastfields.torch" = "https://fastfields.github.io/fastfields-torch/"},
+    {":simple-nvidia: fastfields.cupy" = "https://fastfields.github.io/fastfields-cupy/"},
+    {":material-cube-outline: fastfields.dlpack" = "https://fastfields.github.io/fastfields-bind-py/"},
+    {":simple-cplusplus: libfastfields (C++)" = "https://fastfields.github.io/fastfields-lib/"},
   ]},
-  {"Wheel index" = "https://fastfields.github.io/whl/"},
+  {":simple-pypi: Wheel index" = "https://fastfields.github.io/whl/"},
 ]
 
 [project.theme]
