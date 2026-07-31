@@ -17,7 +17,7 @@ Copyright &copy; 2026 The fastfields authors
 nav = [
   {"Home" = "index.md"},
   {"Packages" = [
-    {"fastfields (any)" = "https://fastfields.github.io/fastfields/"},
+    {"fastfields.any" = "https://fastfields.github.io/fastfields/"},
     {"fastfields.numpy" = "https://fastfields.github.io/fastfields-numpy/"},
     {"fastfields.torch" = "https://fastfields.github.io/fastfields-torch/"},
     {"fastfields.cupy" = "https://fastfields.github.io/fastfields-cupy/"},
@@ -48,7 +48,7 @@ toggle.icon = "lucide/moon"
 toggle.name = "Switch to light mode"
 
 [project.theme.icon]
-logo = "material/waves"
+logo = "fontawesome/solid/spiral"
 repo = "fontawesome/brands/github"
 
 [project.markdown_extensions.admonition]
