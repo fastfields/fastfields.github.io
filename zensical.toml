@@ -21,7 +21,7 @@ nav = [
     {"fastfields.numpy" = "https://fastfields.github.io/fastfields-numpy/"},
     {"fastfields.torch" = "https://fastfields.github.io/fastfields-torch/"},
     {"fastfields.cupy" = "https://fastfields.github.io/fastfields-cupy/"},
-    {"fastfields.dlpack" = "https://fastfields.github.io/fastfields-bind-py/"},
+    {"fastfields.dlpack" = "https://fastfields.github.io/fastfields-dlpack/"},
     {"libfastfields (C++)" = "https://fastfields.github.io/fastfields-lib/"},
   ]},
   {"Wheel index" = "https://fastfields.github.io/whl/"},
