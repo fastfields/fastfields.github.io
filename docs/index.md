@@ -29,11 +29,11 @@ Grab a build for your hardware from the [wheel index](https://fastfields.github.
 
 ```sh
 # GPU (CUDA 12.8)
-pip install fastfields fastfields-torch \
+pip install fastfields[torch] \
     --extra-index-url https://fastfields.github.io/whl/cu128/
 
 # CPU only
-pip install fastfields fastfields-numpy \
+pip install fastfields[numpy] \
     --extra-index-url https://fastfields.github.io/whl/cpu/
 ```
 
