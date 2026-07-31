@@ -1,2 +1,1 @@
 zensical
-mkdocs-awesome-pages-plugin
