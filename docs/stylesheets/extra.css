@@ -16,9 +16,9 @@ a:where(
   [href$="fastfields.github.io/fastfields/"],
   [href$="fastfields.github.io/fastfields-numpy/"],
   [href$="fastfields.github.io/fastfields-cupy/"],
-  [href$="fastfields.github.io/fastfields-torch/"]
-  [href$="fastfields.github.io/fastfields-dlpack/"]
-  [href$="fastfields.github.io/fastfields-lib/"]
+  [href$="fastfields.github.io/fastfields-torch/"],
+  [href$="fastfields.github.io/fastfields-dlpack/"],
+  [href$="fastfields.github.io/fastfields-lib/"],
   [href$="fastfields.github.io/whl/"]
 )::before {
   content: "";
