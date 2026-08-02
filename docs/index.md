@@ -47,7 +47,7 @@ installable yet.
 | **Field regularisers** — `field_matvec`, `field_diag`, `field_kernel`, `field_relax`, `field_precond`, + the `add`/`sub` accumulate forms | ✓ | ✓ | planned | planned |
 | **Flow regularisers** — `flow_matvec`, `flow_diag`, `flow_kernel`, `flow_relax`, `flow_precond`, + the `add`/`sub` accumulate forms | ✓ | ✓ | planned | planned |
 
-`fastfields.any` dispatches on the type of the array you hand it, so it reaches
+`fastfields.auto` dispatches on the type of the array you hand it, so it reaches
 every ✓ above. Two deliberate exceptions: `dt_spline_*` dispatches only for
 NumPy and CuPy arrays (the backends that implement it), and the shape-based
 builders `field_diag` / `field_kernel` / `flow_diag` / `flow_kernel` have no
@@ -80,11 +80,11 @@ share the `fastfields` namespace and merge into one import.
 
 ## Use it
 
-`fastfields.any` picks the right backend from whatever array you pass:
+`fastfields.auto` picks the right backend from whatever array you pass:
 
 ```python
 import numpy as np
-from fastfields import any as ff
+from fastfields import auto as ff
 
 mask = np.zeros((256, 256), "float32")
 mask[128, 128] = 1.0
@@ -99,7 +99,7 @@ autograd on PyTorch.
 
 | install | import | status | docs |
 |---|---|---|---|
-| `fastfields` | `fastfields.any` | ✓ CPU | [](https://fastfields.github.io/fastfields/) |
+| `fastfields` | `fastfields.auto` | ✓ CPU | [](https://fastfields.github.io/fastfields/) |
 | `fastfields-numpy` | `fastfields.numpy` | ✓ CPU | [](https://fastfields.github.io/fastfields-numpy/) |
 | `fastfields-torch` | `fastfields.torch` | ✓ CPU | [](https://fastfields.github.io/fastfields-torch/) |
 | `fastfields-cupy` | `fastfields.cupy` | needs a CUDA build ([roadmap](#roadmap)) | [](https://fastfields.github.io/fastfields-cupy/) |
