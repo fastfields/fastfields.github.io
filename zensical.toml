@@ -18,7 +18,7 @@ Copyright &copy; 2026 The fastfields authors
 # wheel index.
 nav = [
   {"Home" = "index.md"},
-  {"fastfields.any" = "https://fastfields.github.io/fastfields/"},
+  {"fastfields.auto" = "https://fastfields.github.io/fastfields/"},
   {"fastfields.numpy" = "https://fastfields.github.io/fastfields-numpy/"},
   {"fastfields.torch" = "https://fastfields.github.io/fastfields-torch/"},
   {"fastfields.cupy" = "https://fastfields.github.io/fastfields-cupy/"},
