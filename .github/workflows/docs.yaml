@@ -51,7 +51,11 @@ jobs:
       - name: Mark the site as not-Jekyll
         run: touch site/.nojekyll
 
+      # This repo publishes its own site root, so the default GITHUB_TOKEN is
+      # enough -- it already has contents: write here. The DOCS_DEPLOY_KEY
+      # deploy key is for the three OTHER repos, which cannot use GITHUB_TOKEN
+      # because it is scoped to the repo it runs in.
       - name: Publish the site root into gh-pages
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./tools/publish-docs.sh --subdir "" --site site
+        run: ./tools/publish-docs.sh --auth token --subdir "" --site site
