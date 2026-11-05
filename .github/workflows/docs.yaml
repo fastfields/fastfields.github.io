@@ -1,36 +1,57 @@
 name: Build and deploy landing page
 
+# Publishes the site ROOT (this repo's landing page, the shared stylesheet and
+# the theme assets) into the `gh-pages` branch of this same repo, which is what
+# GitHub Pages serves.
+#
+# Why a branch and not actions/deploy-pages: three other repos publish into
+# this one site (`/python/` from fastfields, `/dlpack/` from fastfields-dlpack,
+# `/lib/` from fastfields-lib). actions/deploy-pages can only deploy to the
+# repo it runs in and replaces the whole site each time, so it cannot express
+# "several repos, one site". A shared branch can, provided every publisher
+# touches only its own subtree -- which is the invariant the rsync below keeps.
+#
+# `/whl/` is deliberately NOT part of this branch: the `whl` repo is named
+# `whl`, so its own project Pages site already serves at
+# fastfields.github.io/whl/. It stays independent and is not exposed to any of
+# this.
+
 on:
   push:
     branches: [main]
-    paths: ["docs/**", "zensical.toml", ".github/workflows/docs.yaml"]
+    paths:
+      - "docs/**"
+      - "zensical.toml"
+      - ".github/workflows/docs.yaml"
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
+# Stops THIS repo racing itself. It is not the cross-repo guard: concurrency
+# groups are per-repository, so they cannot serialize this workflow against the
+# publishers in the other repos. That is what the push-retry loop below is for.
 concurrency:
-  group: pages
+  group: publish-docs
   cancel-in-progress: false
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/configure-pages@v5
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
       - run: pip install -r docs/requirements.txt
       - run: zensical build --clean
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: site
-      - uses: actions/deploy-pages@v4
-        id: deployment
+
+      # Jekyll would otherwise swallow any path component starting with an
+      # underscore. The root publisher owns this file for the whole site.
+      - name: Mark the site as not-Jekyll
+        run: touch site/.nojekyll
+
+      - name: Publish the site root into gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./tools/publish-docs.sh --subdir "" --site site
