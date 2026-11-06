@@ -19,13 +19,27 @@ Copyright &copy; 2026 The fastfields authors
 # (`/python/`, `/dlpack/`, `/lib/`) and never touch this page. `/whl/` is not
 # in this branch at all -- it is the `whl` repo's own Pages site.
 #
-# Cross-section nav entries are absolute URLs because they cross sites; links
-# inside one section stay relative.
+# The canonical fastfields menu: one entry per fastfields namespace, plus Home
+# and the wheel index. The nine top-level entries, these labels and this order
+# are identical in all four sections (see DOCS-THEME.md in the fastfields/.github
+# repo) and tools/check-docs-nav.py fails the build if they drift. A section
+# expands the entries it owns into its own pages and links the rest absolutely:
+# a relative target keeps in-site navigation native (active-page highlight, no
+# full page reload), an absolute one crosses to another section's site.
+#
+# This repo owns exactly one page, so `Home` is the only relative entry here and
+# every namespace entry crosses to the section that documents it. The namespace
+# order is the order of the Packages table on the landing page; keep the two
+# consistent.
 nav = [
   {"Home" = "index.md"},
-  {"Python packages" = "https://fastfields.github.io/python/"},
-  {"Raw DLPack binding" = "https://fastfields.github.io/dlpack/"},
-  {"C++/CUDA library" = "https://fastfields.github.io/lib/"},
+  {"fastfields.auto" = "https://fastfields.github.io/python/auto/"},
+  {"fastfields.numpy" = "https://fastfields.github.io/python/numpy/"},
+  {"fastfields.torch" = "https://fastfields.github.io/python/torch/"},
+  {"fastfields.cupy" = "https://fastfields.github.io/python/cupy/"},
+  {"fastfields.helpers" = "https://fastfields.github.io/python/helpers/"},
+  {"fastfields.dlpack" = "https://fastfields.github.io/dlpack/"},
+  {"libfastfields" = "https://fastfields.github.io/lib/"},
   {"Wheel index" = "https://fastfields.github.io/whl/"},
 ]
 
