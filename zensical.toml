@@ -19,13 +19,19 @@ Copyright &copy; 2026 The fastfields authors
 # (`/python/`, `/dlpack/`, `/lib/`) and never touch this page. `/whl/` is not
 # in this branch at all -- it is the `whl` repo's own Pages site.
 #
-# The canonical fastfields menu: one entry per fastfields namespace, plus Home
-# and the wheel index. The nine top-level entries, these labels and this order
-# are identical in all four sections (see DOCS-THEME.md in the fastfields/.github
-# repo) and tools/check-docs-nav.py fails the build if they drift. A section
-# expands the entries it owns into its own pages and links the rest absolutely:
-# a relative target keeps in-site navigation native (active-page highlight, no
-# full page reload), an absolute one crosses to another section's site.
+# The canonical fastfields menu: one entry per installable fastfields
+# namespace, plus Home and the wheel index. The eight top-level entries, these
+# labels and this order are identical in all four sections (see DOCS-THEME.md
+# in the fastfields/.github repo) and tools/check-docs-nav.py fails the build
+# if they drift. A section expands the entries it owns into its own pages and
+# links the rest absolutely: a relative target keeps in-site navigation native
+# (active-page highlight, no full page reload), an absolute one crosses to
+# another section's site.
+#
+# `fastfields.helpers` is not one of the eight: it ships inside the base
+# distribution rather than being installed or imported on its own, so it is
+# not a listed namespace. Its pages stay published, nested under
+# `fastfields.auto` on the /python/ section.
 #
 # This repo owns exactly one page, so `Home` is the only relative entry here and
 # every namespace entry crosses to the section that documents it. The namespace
@@ -37,7 +43,6 @@ nav = [
   {"fastfields.numpy" = "https://fastfields.github.io/python/numpy/"},
   {"fastfields.torch" = "https://fastfields.github.io/python/torch/"},
   {"fastfields.cupy" = "https://fastfields.github.io/python/cupy/"},
-  {"fastfields.helpers" = "https://fastfields.github.io/python/helpers/"},
   {"fastfields.dlpack" = "https://fastfields.github.io/dlpack/"},
   {"libfastfields" = "https://fastfields.github.io/lib/"},
   {"Wheel index" = "https://fastfields.github.io/whl/"},

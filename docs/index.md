@@ -112,9 +112,6 @@ the native library are released separately.
 
 Install only the extras you need — `fastfields[numpy]` alone is a perfectly
 good setup, and `fastfields.auto` dispatches over exactly the subset you have.
-The shared argument helpers are documented under
-[`fastfields.helpers`](python/helpers/), and how the extras relate to the wheel
-lanes under [packaging](python/monorepo/).
 
 The C++/CUDA side is documented separately: its
 [layer stack and architecture](lib/architecture/) and its
