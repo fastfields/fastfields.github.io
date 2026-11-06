@@ -1,7 +1,3 @@
----
-icon: fontawesome/solid/house
----
-
 # fastfields
 
 **fastfields** is a fast, `pip`-installable toolkit for computing on dense
