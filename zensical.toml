@@ -13,17 +13,19 @@ copyright = """
 Copyright &copy; 2026 The fastfields authors
 """
 
-# The org landing page. Home is prose; the rest of the nav points OUT to each
-# package's own API site (published at fastfields.github.io/<repo>/) and to the
-# wheel index.
+# The org landing page, and the site root. This repo OWNS `/index.html`, the
+# shared stylesheet served at /stylesheets/extra.css, and nothing else: the
+# three publisher repos each write one subtree below it
+# (`/python/`, `/dlpack/`, `/lib/`) and never touch this page. `/whl/` is not
+# in this branch at all -- it is the `whl` repo's own Pages site.
+#
+# Cross-section nav entries are absolute URLs because they cross sites; links
+# inside one section stay relative.
 nav = [
   {"Home" = "index.md"},
-  {"fastfields.auto" = "https://fastfields.github.io/fastfields/"},
-  {"fastfields.numpy" = "https://fastfields.github.io/fastfields-numpy/"},
-  {"fastfields.torch" = "https://fastfields.github.io/fastfields-torch/"},
-  {"fastfields.cupy" = "https://fastfields.github.io/fastfields-cupy/"},
-  {"fastfields.dlpack" = "https://fastfields.github.io/fastfields-dlpack/"},
-  {"libfastfields" = "https://fastfields.github.io/fastfields-lib/"},
+  {"Python packages" = "https://fastfields.github.io/python/"},
+  {"Raw DLPack binding" = "https://fastfields.github.io/dlpack/"},
+  {"C++/CUDA library" = "https://fastfields.github.io/lib/"},
   {"Wheel index" = "https://fastfields.github.io/whl/"},
 ]
 

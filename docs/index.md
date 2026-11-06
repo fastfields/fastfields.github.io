@@ -97,15 +97,28 @@ autograd on PyTorch.
 
 ## Packages
 
+The five Python distributions are now **one** distribution, `fastfields`, with
+the array library chosen by an extra; `fastfields-dlpack` (the raw binding) and
+the native library are released separately.
+
 | install | import | status | docs |
 |---|---|---|---|
-| `fastfields` | `fastfields.auto` | ✓ CPU | [](https://fastfields.github.io/fastfields/) |
-| `fastfields-numpy` | `fastfields.numpy` | ✓ CPU | [](https://fastfields.github.io/fastfields-numpy/) |
-| `fastfields-torch` | `fastfields.torch` | ✓ CPU | [](https://fastfields.github.io/fastfields-torch/) |
-| `fastfields-cupy` | `fastfields.cupy` | needs a CUDA build ([roadmap](#roadmap)) | [](https://fastfields.github.io/fastfields-cupy/) |
+| `fastfields` | `fastfields.auto` | ✓ CPU | [auto](python/) |
+| `fastfields[numpy]` | `fastfields.numpy` | ✓ CPU | [numpy](python/numpy/) |
+| `fastfields[torch]` | `fastfields.torch` | ✓ CPU | [torch](python/torch/) |
+| `fastfields[cupy]` | `fastfields.cupy` | needs a CUDA build ([roadmap](#roadmap)) | [cupy](python/cupy/) |
+| `fastfields-dlpack` | `fastfields.dlpack` | ✓ CPU | [dlpack](dlpack/) |
+| — (built from source) | `libfastfields.so` | ✓ CPU | [lib](lib/) |
 
-Install only the backends you need — they share the `fastfields` namespace and
-merge into one import.
+Install only the extras you need — `fastfields[numpy]` alone is a perfectly
+good setup, and `fastfields.auto` dispatches over exactly the subset you have.
+The shared argument helpers are documented under
+[`fastfields.helpers`](python/helpers/), and how the extras relate to the wheel
+lanes under [packaging](python/monorepo/).
+
+The C++/CUDA side is documented separately: its
+[layer stack and architecture](lib/architecture/) and its
+[operation families](lib/api/).
 
 ## Roadmap
 
