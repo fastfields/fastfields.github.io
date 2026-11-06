@@ -479,10 +479,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-stayed-the-same-deliberately" class="md-nav__link">
+  <a href="#what-stayed-the-same-on-purpose" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What stayed the same, deliberately
+        What stayed the same, on purpose
       </span>
     </span>
   </a>
@@ -1103,10 +1103,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-stayed-the-same-deliberately" class="md-nav__link">
+  <a href="#what-stayed-the-same-on-purpose" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What stayed the same, deliberately
+        What stayed the same, on purpose
       </span>
     </span>
   </a>
@@ -1156,8 +1156,11 @@
 
 
 <h1 id="one-distribution-five-namespaces">One distribution, five namespaces</h1>
-<p><code>fastfields</code> used to be five separate PyPI distributions, one per subpackage of
-the <code>fastfields</code> namespace:</p>
+<p><code>fastfields</code> used to be five separate PyPI distributions, one for each
+subpackage of the <code>fastfields</code> namespace. It is now one distribution that ships
+all five. The import surface did not move: the same <code>fastfields.&lt;sub&gt;</code> modules
+exist with the same contents, and <code>fastfields.dlpack</code> still merges into the
+same namespace from its own wheel.</p>
 <table>
 <thead>
 <tr>
@@ -1199,53 +1202,49 @@ the <code>fastfields</code> namespace:</p>
 </tr>
 </tbody>
 </table>
-<p>They are now one distribution, <code>fastfields</code>, shipping all five. Nothing about
-the import surface moved: the same five <code>fastfields.&lt;sub&gt;</code> modules exist, with
-the same contents, and <code>fastfields.dlpack</code> still merges into the same namespace
-from its own wheel.</p>
-<h2 id="what-stayed-the-same-deliberately">What stayed the same, deliberately</h2>
-<p><strong>They are still PEP 420 namespace subpackages.</strong> There is no
+<h2 id="what-stayed-the-same-on-purpose">What stayed the same, on purpose</h2>
+<p><strong>The subpackages are still PEP 420 namespace subpackages.</strong> There is no
 <code>fastfields/__init__.py</code> anywhere, in this distribution or in
-<code>fastfields-dlpack</code>. That absence is the whole mechanism: <code>fastfields</code> is a
-<em>native namespace package</em>, so two independently-installed wheels can each
-contribute a <code>fastfields/&lt;sub&gt;/</code> directory and both be importable. Add a
+<code>fastfields-dlpack</code>, and that absence is the whole mechanism. <code>fastfields</code> is a
+native namespace package, so two independently installed wheels can each
+contribute a <code>fastfields/&lt;sub&gt;/</code> directory and both stay importable. Add a
 top-level <code>__init__.py</code> and <code>fastfields</code> becomes an ordinary package owned by
-whichever wheel shipped it -- and <code>fastfields.dlpack</code>, the compiled half,
-stops being importable. The merged <code>pyproject.toml</code> lists each subpackage
-explicitly with <code>namespaces = true</code> for exactly this reason, and
+whichever wheel shipped it, and <code>fastfields.dlpack</code>, the compiled half, stops
+being importable. For this reason the merged <code>pyproject.toml</code> lists each
+subpackage explicitly with <code>namespaces = true</code>, and
 <code>tools/consolidate-python.sh</code> fails if an <code>__init__.py</code> ever appears there.</p>
-<p><strong><code>fastfields-dlpack</code> stays a separate distribution and a separate repo.</strong> It
-is the only compiled one: it needs a per-platform wheel matrix, and
-<code>libfastfields-cpu.so</code> alone is about 166 MB. Folding it in would mean every
-one-line Python fix rebuilds and re-uploads that whole matrix -- which is
+<p><strong><code>fastfields-dlpack</code> stays a separate distribution and repository.</strong> It is the
+only compiled one. It needs a per-platform wheel matrix, and
+<code>libfastfields-cpu.so</code> alone is about 166 MB. Folding it in would mean that
+every one-line Python fix rebuilds and re-uploads that whole matrix, which is
 exactly why <code>fastfields-helpers</code> was split <em>out</em> of it in the first place.
 Merging the five pure-Python distributions keeps that property: <code>fastfields</code> is
 still one universal <code>py3-none-any</code> wheel with no compiled content, so a fix to
 any of the five ships as an ordinary pure-Python release. There is no
-circularity to worry about either -- <code>fastfields-dlpack</code> depends only on
-<code>packaging</code>, never on anything here.</p>
+circularity either, because <code>fastfields-dlpack</code> depends only on <code>packaging</code> and
+never on anything here.</p>
 <p><strong>The array libraries are still optional.</strong> <code>numpy</code>, <code>torch</code> and <code>cupy</code> are
-extras (<code>fastfields[numpy]</code>, <code>[torch]</code>, <code>[cupy]</code>, <code>[all]</code>), so
+extras (<code>fastfields[numpy]</code>, <code>[torch]</code>, <code>[cupy]</code> and <code>[all]</code>), so
 <code>pip install fastfields</code> works with whatever subset you have, and
 <code>fastfields.auto</code> dispatches over exactly that subset. <code>fastfields-dlpack</code> is
 the only hard dependency.</p>
 <h2 id="the-one-wrinkle-an-extra-is-not-a-lane">The one wrinkle: an extra is not a lane</h2>
-<p>This is the part worth reading before filing a bug.</p>
-<p><code>fastfields-dlpack</code> encodes which compute backend it was compiled for in its
-version's PEP 440 <em>local</em> segment, PyTorch-style: <code>0.0.dev0+cpu</code>, <code>+cu118</code>,
-<code>+cu126</code>, <code>+cu130</code>. It exposes that at runtime as <code>fastfields.dlpack.backend</code>.
-<strong>Which one you get is decided by the index folder you install from</strong>, not by
-the dependency graph:</p>
+<p>Read this before filing a bug.</p>
+<p><code>fastfields-dlpack</code> records the compute backend it was compiled for in the
+local segment of its PEP 440 version, in the PyTorch style: <code>0.0.dev0+cpu</code>,
+<code>+cu118</code>, <code>+cu126</code>, <code>+cu130</code>. At runtime that is
+<code>fastfields.dlpack.backend</code>. <strong>Which one you get is decided by the index folder
+you install from</strong>, not by the dependency graph:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>fastfields<span class="w"> </span>--extra-index-url<span class="w"> </span>https://fastfields.github.io/whl/cpu/
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pip<span class="w"> </span>install<span class="w"> </span>fastfields<span class="w"> </span>--extra-index-url<span class="w"> </span>https://fastfields.github.io/whl/cu130/
 </code></pre></div>
-<p>No package in this distribution pins a lane, and none can: <code>pip</code> has no way to
+<p>No package in this distribution pins a lane, and none can. <code>pip</code> has no way to
 express "any build with CUDA", and a pin would fight the <code>--extra-index-url</code>
 you just chose. So the dependency on <code>fastfields-dlpack</code> is deliberately
 unqualified.</p>
 <p>The consequence is that <strong>the <code>cupy</code> extra selects the CuPy client library, not
 the CUDA lane</strong>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"fastfields[cupy]"</span><span class="w">      </span><span class="c1"># succeeds -- on the CPU lane too</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"fastfields[cupy]"</span><span class="w">  </span><span class="c1"># succeeds, on the CPU lane too</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import fastfields.cupy"</span><span class="w">  </span><span class="c1"># ImportError</span>
 </code></pre></div>
 <p>That install is not wrong in any way <code>pip</code> can see, and it is not a resolution
@@ -1263,41 +1262,42 @@ namespace enforces its own requirement at runtime:</p>
 <tr>
 <td><code>fastfields.numpy</code></td>
 <td>CPU</td>
-<td>nothing. The CPU path works on any build.</td>
+<td>Nothing. The CPU path works on any build.</td>
 </tr>
 <tr>
 <td><code>fastfields.cupy</code></td>
 <td>CUDA</td>
-<td><strong>fails at import</strong> if <code>fastfields.dlpack.backend</code> is not <code>cu*</code>. Every operation here runs in CUDA device memory, so there is no partial mode worth offering. The message names the index URL and the <code>pip</code> command.</td>
+<td><strong>Fails at import</strong> if <code>fastfields.dlpack.backend</code> is not <code>cu*</code>. Every operation runs in CUDA device memory, so there is no partial mode worth offering. The message names the index URL and the <code>pip</code> command.</td>
 </tr>
 <tr>
 <td><code>fastfields.torch</code></td>
 <td>either</td>
-<td><strong>fails lazily</strong>: the CPU path is the tested one and runs on any build, so the import always succeeds and the check happens only when a CUDA tensor arrives (in <code>stream_ptr</code>, which every operation already calls).</td>
+<td><strong>Fails lazily.</strong> The CPU path is the tested one and runs on any build, so the import always succeeds and the check happens only when a CUDA tensor arrives, in <code>stream_ptr</code>, which every operation already calls.</td>
 </tr>
 <tr>
 <td><code>fastfields.auto</code></td>
 <td>whatever is installed</td>
-<td>reports. <code>fastfields.auto.dlpack_backend()</code> returns the label; dispatch is dynamic already.</td>
+<td>Reports. <code>fastfields.auto.dlpack_backend()</code> returns the label, and dispatch is dynamic already.</td>
 </tr>
 </tbody>
 </table>
 <p>An unlabelled build (<code>backend is None</code>, which is what an unversioned source
 checkout reports) is let through everywhere. It means <em>unknown</em>, not <em>CPU</em>, and
-every wheel from the index carries a real label -- so refusing it would block
-GPU development from a source tree while catching no real mistake.</p>
+every wheel from the index carries a real label, so refusing it would block GPU
+development from a source tree while catching no real mistake.</p>
 <h2 id="how-the-merge-was-done">How the merge was done</h2>
-<p><code>tools/consolidate-python.sh</code> is the frozen record, and the Python-side sibling
-of <code>fastfields-lib</code>'s <code>tools/consolidate.sh</code>. In outline: one
-<code>git filter-repo</code> path-move pass per absorbed repo, then four
-<code>--allow-unrelated-histories</code> merges into this repo's existing history. This
-repo was not rewritten, so its <code>main</code> is still a true ancestor of the result
-and every existing commit SHA and permalink against it still resolves.</p>
-<p>History is preserved, including across the old <code>fastfields_numpy/</code> -&gt;
-<code>fastfields/numpy/</code> layout rename, which the path rules fold onto one path so
-<code>git log --follow</code> crosses it. Issue and PR <em>numbers</em> do not transfer: GitHub
-does not redirect them across a repository merge, so a reference to, say,
-<code>fastfields-numpy#23</code> remains a reference to that archived repo.</p>
+<p><code>tools/consolidate-python.sh</code> is the frozen record. It is the Python-side
+sibling of <code>tools/consolidate.sh</code> in <code>fastfields-lib</code>. In outline there was one
+<code>git filter-repo</code> path-move pass for each absorbed repository, followed by four
+<code>--allow-unrelated-histories</code> merges into this repository's existing history.
+This repository was not rewritten, so its <code>main</code> is still a true ancestor of
+the result and every existing commit SHA and permalink against it still
+resolves.</p>
+<p>History is preserved across the old <code>fastfields_numpy/</code> to <code>fastfields/numpy/</code>
+layout rename too, which the path rules fold onto one path so that
+<code>git log --follow</code> crosses it. Issue and PR <em>numbers</em> do not transfer, because
+GitHub does not redirect them across a repository merge. A reference to, say,
+<code>fastfields-numpy#23</code> remains a reference to that archived repository.</p>
 
 
 

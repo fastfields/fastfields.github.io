@@ -577,10 +577,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -616,10 +616,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-this-wrapper-does-not-expose" class="md-nav__link">
+  <a href="#batch-axes-and-memory" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What this wrapper does not expose
+        Batch axes and memory
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-package-does-not-wrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What this package does not wrap
       </span>
     </span>
   </a>
@@ -1142,10 +1153,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -1181,10 +1192,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-this-wrapper-does-not-expose" class="md-nav__link">
+  <a href="#batch-axes-and-memory" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What this wrapper does not expose
+        Batch axes and memory
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-package-does-not-wrap" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What this package does not wrap
       </span>
     </span>
   </a>
@@ -1212,28 +1234,29 @@
 
 
 <h1 id="fastfieldsnumpy">fastfields.numpy</h1>
-<p><strong><code>fastfields.numpy</code></strong> brings the fastfields field operators to plain <strong>NumPy
-arrays</strong> on the CPU. Every function takes NumPy arrays in and returns fresh
-NumPy arrays out — your inputs are left untouched unless you explicitly ask for
-an in-place variant.</p>
+<p><code>fastfields.numpy</code> runs the fastfields operators on NumPy arrays, on the CPU.
+Arrays go in and freshly allocated arrays come out. Your inputs are left alone
+unless you call one of the in-place variants, whose names end in an
+underscore.</p>
 <h2 id="install">Install</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"fastfields[numpy]"</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>--extra-index-url<span class="w"> </span>https://fastfields.github.io/whl/cpu/
 </code></pre></div>
-<p>The <code>numpy</code> extra pulls NumPy itself; the <code>fastfields</code> distribution
-ships this subpackage along with <code>fastfields.torch</code>,
-<code>fastfields.cupy</code>, <code>fastfields.auto</code> and <code>fastfields.helpers</code>. The
-<code>--extra-index-url</code> is what selects the compiled
-<code>fastfields-dlpack</code> lane -- <code>cpu</code> is the right one here.</p>
-<h2 id="use-it">Use it</h2>
+<p>The <code>numpy</code> extra installs NumPy itself. The <code>--extra-index-url</code> is what
+selects the compiled <code>fastfields-dlpack</code> build, and <code>cpu</code> is the right one
+here. The same <code>fastfields</code> distribution also ships <code>fastfields.torch</code>,
+<code>fastfields.cupy</code>, <code>fastfields.auto</code> and <code>fastfields.helpers</code>.</p>
+<h2 id="a-first-example">A first example</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fastfields.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ff</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="s2">"float32"</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">mask</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">feature</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"float32"</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">feature</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># features are 0, everything else is +inf</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>      <span class="c1"># squared Euclidean distance along the last axis</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>  <span class="c1"># squared distance to column 128, per row</span>
 </code></pre></div>
+<p>Distance transforms work along the last axis and expect <code>0</code> at the features
+and <code>+inf</code> elsewhere. <code>dt_euclidean</code> returns squared distances.</p>
 <h2 id="whats-inside">What's inside</h2>
 <table>
 <thead>
@@ -1245,31 +1268,38 @@ ships this subpackage along with <code>fastfields.torch</code>,
 <tbody>
 <tr>
 <td><strong>Distance transforms</strong></td>
-<td><code>dt_euclidean</code>, <code>dt_l1</code> (along the last axis); point-to-spline <code>dt_spline_table</code> / <code>dt_spline_brent</code> / <code>dt_spline_gaussnewton</code>; point-to-mesh <code>dt_mesh</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_euclidean" href="../api/numpy/#fastfields.numpy.dt_euclidean"><code>dt_euclidean</code></a> and <a class="autorefs autorefs-internal" title="dt_l1" href="../api/numpy/#fastfields.numpy.dt_l1"><code>dt_l1</code></a> along the last axis; point-to-spline <a class="autorefs autorefs-internal" title="dt_spline_table" href="../api/numpy/#fastfields.numpy.dt_spline_table"><code>dt_spline_table</code></a>, <a class="autorefs autorefs-internal" title="dt_spline_brent" href="../api/numpy/#fastfields.numpy.dt_spline_brent"><code>dt_spline_brent</code></a> and <a class="autorefs autorefs-internal" title="dt_spline_gaussnewton" href="../api/numpy/#fastfields.numpy.dt_spline_gaussnewton"><code>dt_spline_gaussnewton</code></a>; point-to-mesh <a class="autorefs autorefs-internal" title="dt_mesh" href="../api/numpy/#fastfields.numpy.dt_mesh"><code>dt_mesh</code></a></td>
 </tr>
 <tr>
 <td><strong>Positive-definite linear algebra</strong></td>
-<td><code>sym_matvec</code>, <code>sym_addmatvec_</code>, <code>sym_submatvec_</code>, <code>sym_solve</code>, <code>sym_invert</code> over whole fields of small symmetric matrices</td>
+<td><a class="autorefs autorefs-internal" title="sym_matvec" href="../api/numpy/#fastfields.numpy.sym_matvec"><code>sym_matvec</code></a>, <a class="autorefs autorefs-internal" title="sym_addmatvec_" href="../api/numpy/#fastfields.numpy.sym_addmatvec_"><code>sym_addmatvec_</code></a>, <a class="autorefs autorefs-internal" title="sym_submatvec_" href="../api/numpy/#fastfields.numpy.sym_submatvec_"><code>sym_submatvec_</code></a>, <a class="autorefs autorefs-internal" title="sym_solve" href="../api/numpy/#fastfields.numpy.sym_solve"><code>sym_solve</code></a> and <a class="autorefs autorefs-internal" title="sym_invert" href="../api/numpy/#fastfields.numpy.sym_invert"><code>sym_invert</code></a>, over whole fields of small symmetric matrices</td>
 </tr>
 <tr>
 <td><strong>Resampling</strong></td>
-<td><code>resample</code> (spline up/down-sampling), <code>restriction</code> (its adjoint), <code>spline_coeff</code> (coefficient prefilter)</td>
+<td><a class="autorefs autorefs-internal" title="resample" href="../api/numpy/#fastfields.numpy.resample"><code>resample</code></a> (spline up- and down-sampling), <a class="autorefs autorefs-internal" title="restriction" href="../api/numpy/#fastfields.numpy.restriction"><code>restriction</code></a> (its adjoint) and <a class="autorefs autorefs-internal" title="spline_coeff" href="../api/numpy/#fastfields.numpy.spline_coeff"><code>spline_coeff</code></a> (the coefficient prefilter)</td>
 </tr>
 <tr>
-<td><strong>Spline gather/scatter</strong></td>
-<td><code>pull</code>, <code>push</code>, <code>count</code>, <code>grad</code></td>
+<td><strong>Spline sampling (pushpull)</strong></td>
+<td><a class="autorefs autorefs-internal" title="pull" href="../api/numpy/#fastfields.numpy.pull"><code>pull</code></a> (gather), <a class="autorefs autorefs-internal" title="push" href="../api/numpy/#fastfields.numpy.push"><code>push</code></a> (scatter), <a class="autorefs autorefs-internal" title="count" href="../api/numpy/#fastfields.numpy.count"><code>count</code></a> and <a class="autorefs autorefs-internal" title="grad" href="../api/numpy/#fastfields.numpy.grad"><code>grad</code></a></td>
 </tr>
 <tr>
 <td><strong>Regularisers</strong></td>
-<td><code>field_*</code> (multi-channel field, per-channel penalties) and <code>flow_*</code> (vector flow, scalar penalties + the Lamé <code>shears</code>/<code>div</code> terms): the operator <code>*_matvec</code>, its diagonal <code>*_diag</code>, its stencil <code>*_kernel</code>, the <code>*_add…</code>/<code>*_sub…</code> accumulate forms of each, the RLS/JRLS-weighted <code>*_rls</code> variants, and the regularised system below</td>
+<td><code>field_*</code> for a multi-channel field, with one penalty per channel, and <code>flow_*</code> for a vector flow, with scalar penalties plus the Lamé <code>shears</code> and <code>div</code> terms. Each family has the operator (<code>*_matvec</code>), its diagonal (<code>*_diag</code>), its stencil (<code>*_kernel</code>), accumulate forms of each (<code>*_add…</code> and <code>*_sub…</code>), weighted variants (<code>*_rls</code>) and the regularised system described below</td>
 </tr>
 </tbody>
 </table>
-<p>Spline order and boundary arguments accept an <code>int</code>, a <code>Spline</code> / <code>Bound</code> enum,
-or a friendly string like <code>"cubic"</code> or <code>"dct2"</code>.</p>
+<p>Anything that selects a spline order or a boundary condition (<code>order</code>,
+<code>bound</code>) accepts an <code>int</code>, a <a class="autorefs autorefs-internal" title="Spline" href="../api/numpy/#fastfields.numpy.Spline"><code>Spline</code></a> or
+<a class="autorefs autorefs-internal" title="Bound" href="../api/numpy/#fastfields.numpy.Bound"><code>Bound</code></a> member, or a name such as <code>"cubic"</code> or
+<code>"dct2"</code>.</p>
+<p>A <em>field</em> is a multi-channel array with any number of channels. A <em>flow</em> is a
+vector field whose number of channels equals the number of spatial dimensions.
+The regularisers act on the <code>ndim</code> axes just before the channel axis, and
+<code>ndim</code> is not inferred: it defaults to 1, so pass <code>ndim=2</code> for a 2D image.</p>
 <h3 id="solving-the-regularised-system">Solving the regularised system</h3>
-<p>With <code>H</code> the per-voxel data-term Hessian (compact-symmetric packing) and <code>L</code> a
-regulariser:</p>
+<p>Let <code>H</code> be the per-voxel Hessian of a data term, stored as compact-symmetric
+matrices, and <code>L</code> a regulariser. These functions apply and solve the system
+<code>(H + L) x = g</code>:</p>
 <table>
 <thead>
 <tr>
@@ -1279,41 +1309,48 @@ regulariser:</p>
 </thead>
 <tbody>
 <tr>
-<td><code>field_forward</code> / <code>flow_forward</code></td>
+<td><a class="autorefs autorefs-internal" title="field_forward" href="../api/numpy/#fastfields.numpy.field_forward"><code>field_forward</code></a>, <a class="autorefs autorefs-internal" title="flow_forward" href="../api/numpy/#fastfields.numpy.flow_forward"><code>flow_forward</code></a></td>
 <td>apply <code>(H + L) x</code></td>
 </tr>
 <tr>
-<td><code>field_precond</code> / <code>flow_precond</code></td>
-<td>apply <code>(H + diag(L))⁻¹ g</code> (Jacobi)</td>
+<td><a class="autorefs autorefs-internal" title="field_precond" href="../api/numpy/#fastfields.numpy.field_precond"><code>field_precond</code></a>, <a class="autorefs autorefs-internal" title="flow_precond" href="../api/numpy/#fastfields.numpy.flow_precond"><code>flow_precond</code></a></td>
+<td>apply <code>(H + diag(L))⁻¹ g</code>, the Jacobi preconditioner</td>
 </tr>
 <tr>
-<td><code>field_precond_</code> / <code>flow_precond_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_precond_" href="../api/numpy/#fastfields.numpy.field_precond_"><code>field_precond_</code></a>, <a class="autorefs autorefs-internal" title="flow_precond_" href="../api/numpy/#fastfields.numpy.flow_precond_"><code>flow_precond_</code></a></td>
 <td>the same, in place</td>
 </tr>
 <tr>
-<td><code>field_relax</code> / <code>flow_relax</code></td>
-<td>Gauss-Seidel sweeps on <code>(H + L) x = g</code></td>
+<td><a class="autorefs autorefs-internal" title="field_relax" href="../api/numpy/#fastfields.numpy.field_relax"><code>field_relax</code></a>, <a class="autorefs autorefs-internal" title="flow_relax" href="../api/numpy/#fastfields.numpy.flow_relax"><code>flow_relax</code></a></td>
+<td>Gauss-Seidel sweeps on the system</td>
 </tr>
 <tr>
-<td><code>field_cg</code></td>
+<td><a class="autorefs autorefs-internal" title="field_cg" href="../api/numpy/#fastfields.numpy.field_cg"><code>field_cg</code></a></td>
 <td>preconditioned conjugate gradients on the same system</td>
 </tr>
 </tbody>
 </table>
-<p><code>field_cg</code> mutates <code>sol</code> in place and returns it, like <code>field_relax</code>; pass
-<code>return_info=True</code> to also get the iteration count and final relative
-residual. It is CPU-only in the underlying library (<code>fastfields.cupy</code> has no
-<code>field_cg</code> for that reason).</p>
-<h2 id="what-this-wrapper-does-not-expose">What this wrapper does not expose</h2>
-<p>Of the 58 operations in the underlying C++ hub, this package wraps all but
+<p><code>field_cg</code> updates <code>sol</code> in place and returns it, like <code>field_relax</code>. Pass
+<code>return_info=True</code> to also get the iteration count and the final relative
+residual. The solver is CPU-only in the underlying library, which is why
+<code>fastfields.cupy</code> has no <code>field_cg</code>.</p>
+<h2 id="batch-axes-and-memory">Batch axes and memory</h2>
+<p>Leading axes are batch axes, and they broadcast: you can combine a single
+matrix field with a stack of vector fields, and the result carries the
+broadcast batch shape. The broadcast is a view with zero strides, so nothing is
+copied. Inputs are likewise passed with their own strides instead of being made
+contiguous. Only read-only arrays are copied, because NumPy cannot export them
+through DLPack.</p>
+<h2 id="what-this-package-does-not-wrap">What this package does not wrap</h2>
+<p>Of the 58 operations of the underlying C++ library, this package wraps all but
 four: <code>pull_backward</code>, <code>push_backward</code>, <code>count_backward</code> and <code>grad_backward</code>.
-Those are the adjoints of the gather/scatter operators with respect to both
-the sampled field and the sampling coordinates, and they exist so an autograd
-engine can differentiate through <code>grid</code> — which only <code>fastfields.torch</code> does.
-There is no automatic differentiation on numpy, so they stay at the raw layer:
-call <code>fastfields.dlpack.pull_backward(...)</code> if you need them.</p>
-<p><code>tests/test_api_coverage.py</code> fails if that list ever changes by accident.</p>
-<p>See the <a href="../api/numpy/">API reference</a> for full signatures and options.</p>
+They are the adjoints of the sampling operators with respect to both the
+sampled field and the sampling coordinates, and they exist so that an autograd
+engine can differentiate through <code>grid</code>. Only <code>fastfields.torch</code> has one, so
+NumPy has no use for them. They stay at the raw layer, as
+<code>fastfields.dlpack.pull_backward(...)</code> and so on.
+<code>tests/test_api_coverage_numpy.py</code> fails if that list ever changes by accident.</p>
+<p>See the <a href="../api/numpy/">API reference</a> for the full signatures.</p>
 
 
 

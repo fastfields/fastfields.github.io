@@ -409,10 +409,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -420,10 +420,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-to-use-it-and-when-to-use-a-backend-directly" class="md-nav__link">
+  <a href="#when-to-use-it" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        When to use it, and when to use a backend directly
+        When to use it
       </span>
     </span>
   </a>
@@ -442,10 +442,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-it-does-not-dispatch" class="md-nav__link">
+  <a href="#what-is-not-dispatched" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What it does not dispatch
+        What is not dispatched
       </span>
     </span>
   </a>
@@ -1147,10 +1147,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -1158,10 +1158,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-to-use-it-and-when-to-use-a-backend-directly" class="md-nav__link">
+  <a href="#when-to-use-it" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        When to use it, and when to use a backend directly
+        When to use it
       </span>
     </span>
   </a>
@@ -1180,10 +1180,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-it-does-not-dispatch" class="md-nav__link">
+  <a href="#what-is-not-dispatched" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What it does not dispatch
+        What is not dispatched
       </span>
     </span>
   </a>
@@ -1222,10 +1222,10 @@
 
 
 <h1 id="fastfieldsauto">fastfields.auto</h1>
-<p><strong><code>fastfields.auto</code></strong> is the backend-dispatching interface: every function looks
-at the <strong>type of the first array argument</strong> and forwards the call, unchanged, to
-the matching per-framework package. Write the call once and it runs on whichever
-array library the caller happens to be using.</p>
+<p><code>fastfields.auto</code> dispatches on the array type. Each function looks at the
+type of its first array argument and forwards the call, unchanged, to the
+matching per-framework package. Write the call once and it runs on whichever
+array library the caller happens to use.</p>
 <table>
 <thead>
 <tr>
@@ -1252,85 +1252,86 @@ array library the caller happens to be using.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"fastfields[numpy]"</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>--extra-index-url<span class="w"> </span>https://fastfields.github.io/whl/cpu/
 </code></pre></div>
-<p><code>fastfields.auto</code> ships with the <code>fastfields</code> distribution and needs no extra of
-its own — but it has nothing to dispatch <em>to</em> until at least one backend is
+<p><code>fastfields.auto</code> ships with the <code>fastfields</code> distribution and has no extra of
+its own. It has nothing to dispatch <em>to</em> until at least one backend is
 installed, so pick the extra for the array library you use (<code>[numpy]</code>,
-<code>[torch]</code>, <code>[cupy]</code>, or <code>[all]</code>). It dispatches over exactly the subset you
+<code>[torch]</code>, <code>[cupy]</code> or <code>[all]</code>). It then dispatches over exactly the subset you
 installed.</p>
-<h2 id="use-it">Use it</h2>
+<h2 id="a-first-example">A first example</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastfields</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto</span> <span class="k">as</span> <span class="n">ff</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="s2">"float32"</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">mask</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">feature</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"float32"</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">feature</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># features are 0, everything else is +inf</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>      <span class="c1"># -&gt; runs on fastfields.numpy</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>  <span class="c1"># runs on fastfields.numpy</span>
 </code></pre></div>
 <p>Hand the same function a <code>torch.Tensor</code> and it runs on <code>fastfields.torch</code>
 instead, with autograd, and returns a tensor. Arguments are forwarded
-unchanged, so each call has the signature of the backend function it selects —
-spline order and boundary arguments accept an <code>int</code>, a <code>Spline</code> / <code>Bound</code> enum,
-or a string like <code>"cubic"</code> or <code>"dct2"</code>, exactly as they do on a concrete
-backend.</p>
-<h2 id="when-to-use-it-and-when-to-use-a-backend-directly">When to use it, and when to use a backend directly</h2>
-<p>Reach for <code>fastfields.auto</code> when the array type is <strong>not yours to choose</strong>:
-library code that must accept whatever its caller hands it, a function that runs
-over both NumPy and PyTorch data, or a script you want to move between CPU and
-GPU without rewriting imports.</p>
-<p>Use <a href="../numpy/"><code>fastfields.numpy</code></a>, <a href="../torch/"><code>fastfields.torch</code></a> or
-<a href="../cupy/"><code>fastfields.cupy</code></a> directly when you already know the array type. You
-get a typed API, the backend's own documented signatures, and an import error at
-import time rather than a dispatch error on first call. Nothing is lost by doing
-so — <code>fastfields.auto</code> adds dispatch, not capability, and every operation it
-reaches is an operation one of those three already has.</p>
+unchanged, so each call has the signature of the backend function it selects.
+Spline orders and boundary conditions accept an <code>int</code>, a <code>Spline</code> or <code>Bound</code>
+member, or a name such as <code>"cubic"</code> or <code>"dct2"</code>, exactly as they do on a
+concrete backend.</p>
+<h2 id="when-to-use-it">When to use it</h2>
+<p>Reach for <code>fastfields.auto</code> when the array type is not yours to choose: library
+code that must accept whatever its caller passes, a function that runs over
+both NumPy and PyTorch data, or a script you want to move between CPU and GPU
+without rewriting imports.</p>
+<p>When you already know the array type, import the backend directly:
+<a href="../numpy/"><code>fastfields.numpy</code></a>, <a href="../torch/"><code>fastfields.torch</code></a> or
+<a href="../cupy/"><code>fastfields.cupy</code></a>. You get the backend's own documented signatures,
+and a problem with the installation shows up when you import it, not at the
+first call. Nothing is lost by doing so. <code>fastfields.auto</code> adds dispatch, not
+capability: every operation it reaches is one of those three already has.</p>
 <h2 id="backends-are-imported-lazily">Backends are imported lazily</h2>
-<p>Detection is by the array type's <strong>top-level module name</strong>, so importing
-<code>fastfields.auto</code> does not import NumPy, PyTorch or CuPy — only the backend for
-an array you actually pass gets imported, and only once. That is what makes it
-usable with any subset of the backends installed.</p>
-<p>The failures are correspondingly specific:</p>
+<p>The backend is chosen from the top-level module name of the array's type, so
+importing <code>fastfields.auto</code> does not import NumPy, PyTorch or CuPy. Only the
+backend of an array you actually pass is imported, and only once. That is what
+makes the package usable with any subset of them installed.</p>
+<p>The failures are specific:</p>
 <ul>
-<li>an object that is not a NumPy, PyTorch or CuPy array raises <code>TypeError</code>
+<li>an object that is not a NumPy, PyTorch or CuPy array raises <code>TypeError</code>,
   naming the type it was given;</li>
-<li>an array whose backend package (or that package's own dependency) is not
-  installed raises <code>ImportError</code> naming what to install;</li>
-<li>an operation a backend does not have raises <code>NotImplementedError</code> naming the
-  backends that do have it — never a bare <code>AttributeError</code> from a module the
-  caller never mentioned.</li>
+<li>an array whose backend package, or that package's own dependency, is not
+  installed raises <code>ImportError</code>, naming what to install;</li>
+<li>an operation that a backend does not have raises <code>NotImplementedError</code>,
+  naming the backends that do, and never a bare <code>AttributeError</code> from a module
+  the caller did not mention.</li>
 </ul>
-<h2 id="what-it-does-not-dispatch">What it does not dispatch</h2>
-<p>Two kinds of operation cannot be reached through <code>fastfields.auto</code>, both
-deliberately:</p>
+<h2 id="what-is-not-dispatched">What is not dispatched</h2>
+<p>Two kinds of operation cannot be reached through <code>fastfields.auto</code>, and both
+are deliberate.</p>
 <ul>
 <li><strong>Builders that take a shape, not an array.</strong> <code>field_diag</code>, <code>flow_diag</code>,
-  <code>field_kernel</code> and <code>flow_kernel</code> allocate their output from a rank and a set
-  of penalty weights, so there is no array to dispatch on. Call them on a
-  concrete backend and pass the result into the dispatched operators. Their
-  <code>*_add…</code> / <code>*_sub…</code> accumulate forms <em>do</em> take an array and are dispatched.</li>
+  <code>field_kernel</code> and <code>flow_kernel</code> allocate their output from a rank or shape
+  and a set of penalty weights, so there is no array to dispatch on. Call them
+  on a concrete backend and pass the result to the dispatched operators. Their
+  <code>*_add…</code> and <code>*_sub…</code> accumulate forms do take an array and are dispatched.</li>
 <li><strong>Adjoints that exist for autograd.</strong> <code>pull_backward</code>, <code>push_backward</code>,
-  <code>count_backward</code> and <code>grad_backward</code> are wired into
-  <code>fastfields.torch</code>'s <code>autograd.Function</code> rather than exported, since only
-  PyTorch has an autograd engine. The supported spelling is
-  <code>fastfields.auto.pull(...)</code> followed by <code>.backward()</code> on a torch tensor.</li>
+  <code>count_backward</code> and <code>grad_backward</code> are wired into the <code>autograd.Function</code>
+  of <code>fastfields.torch</code> instead of being exported, since only PyTorch has an
+  autograd engine. The supported spelling is <code>fastfields.auto.pull(...)</code>
+  followed by <code>.backward()</code> on a torch tensor.</li>
 </ul>
-<p>A few operations exist on some backends only and are dispatched with a partial
-table, raising <code>NotImplementedError</code> that names the backends which have them:
-<code>field_cg</code> (numpy), <code>field_precond_</code> / <code>flow_precond_</code> and <code>sym_matvec_backward</code>
-(numpy and cupy). Listing them with a clear failure keeps the asymmetry visible.</p>
+<p>A few operations exist on some backends only. They are dispatched with a
+partial table and raise <code>NotImplementedError</code> naming the backends that have
+them: <code>field_cg</code> (numpy only), <code>field_precond_</code> and <code>flow_precond_</code> (numpy and
+cupy), and <code>sym_matvec_backward</code> (numpy and cupy). Listing them with a clear
+failure keeps the asymmetry visible.</p>
 <h2 id="which-lane-am-i-on">Which lane am I on?</h2>
-<p><code>fastfields.auto</code> never requires a particular compute backend — unlike
-<code>fastfields.cupy</code>, which refuses to import on a CPU-only build, and
-<code>fastfields.torch</code>, which refuses a CUDA tensor on one. It only reports:</p>
+<p><code>fastfields.auto</code> never requires a particular compute backend. By contrast,
+<code>fastfields.cupy</code> refuses to import on a CPU-only build, and <code>fastfields.torch</code>
+refuses a CUDA tensor on one. <code>fastfields.auto</code> only reports:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastfields</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto</span> <span class="k">as</span> <span class="n">ff</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">ff</span><span class="o">.</span><span class="n">dlpack_backend</span><span class="p">()</span>      <span class="c1"># "cpu", "cu126", ... or None</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">ff</span><span class="o">.</span><span class="n">dlpack_backend</span><span class="p">()</span>  <span class="c1"># "cpu", "cu126", ... or None</span>
 </code></pre></div>
-<p><code>None</code> means the installed <code>fastfields-dlpack</code> build carries no lane label, or
-that it cannot be imported at all. Only the <strong>CPU</strong> lane is published today, so
-<code>fastfields.cupy</code> and CUDA <code>torch</code> tensors are not usable yet — see the
+<p><code>None</code> means that the installed <code>fastfields-dlpack</code> carries no lane label, or
+that it cannot be imported at all. Only the CPU lane is published today, so
+<code>fastfields.cupy</code> and CUDA <code>torch</code> tensors are not usable yet. See the
 <a href="https://fastfields.github.io/#status">project status matrix</a>.</p>
-<p>See the <a href="../api/auto/">API reference</a> for the full list of dispatched operations
-and their signatures.</p>
+<p>The <a href="../api/auto/">API reference</a> lists every dispatched operation and the
+backend page that documents it.</p>
 
 
 

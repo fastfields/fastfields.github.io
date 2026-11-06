@@ -1041,8 +1041,8 @@
 
 <h1 id="api-reference">API reference</h1>
 <p>The <code>fastfields</code> distribution ships five subpackages of the <code>fastfields</code>
-namespace. Pick the one matching the arrays you work with, or
-<code>fastfields.auto</code> to let it dispatch for you.</p>
+namespace. Pick the one that matches the arrays you work with, or use
+<code>fastfields.auto</code> and let it choose.</p>
 <table>
 <thead>
 <tr>
@@ -1055,12 +1055,12 @@ namespace. Pick the one matching the arrays you work with, or
 <tr>
 <td><a href="auto/">auto</a></td>
 <td><code>fastfields.auto</code></td>
-<td>dispatches on the array type you pass</td>
+<td>dispatches on the type of the array you pass</td>
 </tr>
 <tr>
 <td><a href="numpy/">numpy</a></td>
 <td><code>fastfields.numpy</code></td>
-<td>NumPy arrays, CPU</td>
+<td>NumPy arrays, on the CPU</td>
 </tr>
 <tr>
 <td><a href="torch/">torch</a></td>
@@ -1075,12 +1075,12 @@ namespace. Pick the one matching the arrays you work with, or
 <tr>
 <td><a href="helpers/">helpers</a></td>
 <td><code>fastfields.helpers</code></td>
-<td>the shared <code>Spline</code>/<code>Bound</code> enums and argument normalisers</td>
+<td>the <code>Spline</code> and <code>Bound</code> enums and the argument normalisers</td>
 </tr>
 </tbody>
 </table>
-<p>The raw bindings they are all built on, <code>fastfields.dlpack</code>, ship from a
-separate distribution (<code>fastfields-dlpack</code>) and are documented
+<p>The raw bindings that all of them are built on, <code>fastfields.dlpack</code>, ship from
+a separate distribution (<code>fastfields-dlpack</code>) and are documented
 <a href="https://fastfields.github.io/dlpack/">there</a>.</p>
 
 

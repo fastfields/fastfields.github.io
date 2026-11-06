@@ -1034,10 +1034,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -1052,23 +1052,6 @@
       </span>
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="What&#x27;s inside">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#what-is-not-dispatched-here-and-why" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        What is not dispatched here, and why
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1104,46 +1087,45 @@
 
 
 <h1 id="fastfields">fastfields</h1>
-<p><strong>fastfields</strong> is the one-import way to use the toolkit: <code>fastfields.auto</code> looks
-at whatever array you hand it — NumPy or PyTorch — and runs the operation on the
-matching backend. Write your code once and it works across frameworks.</p>
-<p>One <code>pip install fastfields</code> gives you all of it: <code>fastfields.auto</code> plus the
+<p><strong>fastfields</strong> is the Python interface to the fastfields toolkit. In the
+common case you import one module, <code>fastfields.auto</code>, and call it on whatever
+array you have: it looks at the array's type, NumPy or PyTorch, and runs the
+operation on the matching backend. Write your code once and it works across
+frameworks.</p>
+<p>One <code>pip install fastfields</code> gives you all of it: <code>fastfields.auto</code>, the
 per-framework modules <code>fastfields.numpy</code>, <code>fastfields.torch</code> and
 <code>fastfields.cupy</code>, and the shared <code>fastfields.helpers</code>. Only the backends you
 install are <em>loaded</em>, so <code>fastfields[numpy]</code> alone is a perfectly good setup.
-Today the tested, working path is <strong>CPU</strong> (NumPy and PyTorch); the CuPy/GPU
-path is implemented but not yet published as a wheel or validated on hardware
-— see <a href="#status">Status</a> below.</p>
-<p>This is the Python section of the fastfields documentation. The
-<a href="https://fastfields.github.io/">project overview</a> has the per-operation status
-matrix and the roadmap; the layers underneath are documented separately, as the
-<a href="https://fastfields.github.io/dlpack/">raw DLPack binding</a> and the
-<a href="https://fastfields.github.io/lib/">C++/CUDA library</a>.</p>
+Today the tested, working path is the <strong>CPU</strong> one, with NumPy and PyTorch. The
+CuPy and GPU path is implemented but not yet published as a wheel or validated
+on hardware; see <a href="#status">Status</a> below.</p>
+<p>This is the Python section of the fastfields documentation. The <a href="https://fastfields.github.io/">project
+overview</a> has the per-operation status matrix
+and the roadmap. The layers underneath are documented separately: the <a href="https://fastfields.github.io/dlpack/">raw
+DLPack binding</a> and the <a href="https://fastfields.github.io/lib/">C++/CUDA
+library</a>.</p>
 <h2 id="install">Install</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># CPU (NumPy)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"fastfields[numpy]"</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span>--extra-index-url<span class="w"> </span>https://fastfields.github.io/whl/cpu/
 </code></pre></div>
 <p>Use <code>fastfields[torch]</code> for PyTorch, or <code>fastfields[all]</code> for all three.</p>
-<p>The extra picks the array library; the <code>--extra-index-url</code> picks the compiled
-<code>fastfields-dlpack</code> lane. Those are two separate choices, and the second one
-is the one that matters for GPU work — see <a href="monorepo/#the-one-wrinkle-an-extra-is-not-a-lane">the monorepo
-note</a>. A GPU (CuPy / CUDA)
-wheel lane is planned but <strong>not published yet</strong> — see <a href="#status">Status</a>.</p>
-<h2 id="use-it">Use it</h2>
+<p>The extra picks the array library, and the <code>--extra-index-url</code> picks the
+compiled <code>fastfields-dlpack</code> build. These are two separate choices, and the
+second one is the one that matters for GPU work; see <a href="monorepo/#the-one-wrinkle-an-extra-is-not-a-lane">the packaging
+note</a>. A GPU wheel lane is
+planned but <strong>not published yet</strong>; see <a href="#status">Status</a>.</p>
+<h2 id="a-first-example">A first example</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastfields</span><span class="w"> </span><span class="kn">import</span> <span class="n">auto</span> <span class="k">as</span> <span class="n">ff</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="s2">"float32"</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">mask</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">feature</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"float32"</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">feature</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># features are 0, everything else is +inf</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>      <span class="c1"># dispatched to the NumPy backend</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">tmask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">tmask</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
-<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">tdist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">tmask</span><span class="p">)</span>    <span class="c1"># same call, dispatched to PyTorch</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>  <span class="c1"># dispatched to the NumPy backend</span>
 </code></pre></div>
+<p>The same call on a <code>torch.Tensor</code>, for instance
+<code>ff.dt_euclidean(torch.as_tensor(feature))</code>, is dispatched to PyTorch.</p>
 <h2 id="whats-inside">What's inside</h2>
 <table>
 <thead>
@@ -1155,75 +1137,52 @@ wheel lane is planned but <strong>not published yet</strong> — see <a href="#s
 <tbody>
 <tr>
 <td><strong>Distance transforms</strong></td>
-<td><code>dt_euclidean</code>, <code>dt_l1</code>; point-to-spline <code>dt_spline_table</code> / <code>dt_spline_brent</code> / <code>dt_spline_gaussnewton</code>; point-to-mesh <code>dt_mesh</code></td>
+<td><code>dt_euclidean</code> and <code>dt_l1</code>; point-to-spline <code>dt_spline_table</code>, <code>dt_spline_brent</code> and <code>dt_spline_gaussnewton</code>; point-to-mesh <code>dt_mesh</code></td>
 </tr>
 <tr>
 <td><strong>Positive-definite linear algebra</strong></td>
-<td><code>sym_matvec</code>, <code>sym_matvec_backward</code>, <code>sym_solve</code>, <code>sym_invert</code> over whole fields of small symmetric matrices</td>
+<td><code>sym_matvec</code>, <code>sym_matvec_backward</code>, <code>sym_solve</code> and <code>sym_invert</code>, over whole fields of small symmetric matrices</td>
 </tr>
 <tr>
 <td><strong>Resampling</strong></td>
-<td><code>resample</code> (spline up/down-sampling), <code>restriction</code> (its adjoint), <code>spline_coeff</code> (coefficient prefilter)</td>
+<td><code>resample</code> (spline up- and down-sampling), <code>restriction</code> (its adjoint) and <code>spline_coeff</code> (the coefficient prefilter)</td>
 </tr>
 <tr>
-<td><strong>Pushpull</strong></td>
-<td><code>pull</code> / <code>push</code> (spline gather &amp; its adjoint scatter), <code>count</code>, <code>grad</code> — the building blocks of image warping/sampling</td>
+<td><strong>Spline sampling (pushpull)</strong></td>
+<td><code>pull</code> and <code>push</code> (gather and its adjoint scatter), <code>count</code> and <code>grad</code>: the building blocks of image warping</td>
 </tr>
 <tr>
 <td><strong>Regularisers</strong></td>
-<td><code>field_matvec</code> / <code>flow_matvec</code> (absolute / membrane / bending energies on fields &amp; vector flows) and their <code>*_diag</code> preconditioners</td>
+<td><code>field_matvec</code> and <code>flow_matvec</code> (absolute, membrane and bending energies on multi-channel fields and on vector flows) and the operators built on them: diagonals, stencils, accumulate forms, the weighted <code>*_rls</code> variants and the regularised system <code>(H + L) x = g</code></td>
 </tr>
 </tbody>
 </table>
-<p>Each call forwards straight to the selected backend, so it shares that backend's
-signature and behaviour (autograd on PyTorch, CUDA streams on CuPy). Prefer a
-single framework? Use <a href="numpy/"><code>fastfields.numpy</code></a>,
-<a href="torch/"><code>fastfields.torch</code></a> or <a href="cupy/"><code>fastfields.cupy</code></a> directly — they
-are in the same install.</p>
-<p>In-place spellings are dispatched too (<code>dt_euclidean_</code>, <code>sym_solve_</code>,
-<code>spline_coeff_</code>, the <code>*_add…_</code>/<code>*_sub…_</code> accumulate forms): they mutate their
-first argument, which is also the array the backend is chosen from.</p>
-<h3 id="what-is-not-dispatched-here-and-why">What is not dispatched here, and why</h3>
-<p><code>fastfields.auto</code> picks a backend from the type of the first array argument
-and forwards everything unchanged. Two kinds of operation cannot be reached
-through it, and both are deliberate.</p>
-<p><strong>Builders that take a shape, not an array</strong> — <code>field_diag</code>, <code>flow_diag</code>,
-<code>field_kernel</code>, <code>flow_kernel</code> allocate their output from a rank and a set of
-penalty weights, so there is no array to dispatch on. Call them on a concrete
-backend and pass the result into the dispatched operators. Their
-<code>*_add…</code>/<code>*_sub…</code> accumulate forms <em>do</em> take an array and are dispatched.</p>
-<p><strong>Adjoints that exist for autograd</strong> — <code>pull_backward</code>, <code>push_backward</code>,
-<code>count_backward</code> and <code>grad_backward</code> are the gradients of the pushpull
-operators. Only <code>fastfields.torch</code> has an autograd engine, and there they are
-wired into the forward op's <code>autograd.Function</code> rather than exported, so
-there is nothing uniform to dispatch. Call <code>fastfields.auto.pull(...)</code> on a
-torch tensor and <code>.backward()</code>, or reach for <code>fastfields.dlpack</code> raw.</p>
-<p>Operations only <em>some</em> backends have are still dispatched, with a partial
-table that raises <code>NotImplementedError</code> naming the backends that do have
-them: <code>field_cg</code> (CPU-only in the C++ library, so numpy), <code>field_precond_</code> /
-<code>flow_precond_</code> (numpy and cupy), <code>sym_matvec_backward</code> (numpy and cupy).
-Listing them with a clear failure beats omitting them, which would make the
-asymmetry invisible from here.</p>
-<p>And if a backend turns out not to have an operation this module says it does
-— a mixed install, where <code>fastfields.auto</code> is newer than the wrapper — the
-call raises <code>NotImplementedError</code> saying which package to upgrade, not a bare
-<code>AttributeError</code> from a module you never named.</p>
+<p>Each call forwards straight to the selected backend, so it shares that
+backend's signature and behaviour: autograd on PyTorch, CUDA streams on CuPy.
+In-place spellings are dispatched too (<code>dt_euclidean_</code>, <code>sym_solve_</code>,
+<code>spline_coeff_</code>, the <code>*_add…_</code> and <code>*_sub…_</code> accumulate forms). They update
+their first argument, which is also the array the backend is chosen from.</p>
+<p>If you only use one framework, import its module directly:
+<a href="numpy/"><code>fastfields.numpy</code></a>, <a href="torch/"><code>fastfields.torch</code></a> or
+<a href="cupy/"><code>fastfields.cupy</code></a>. They are in the same install. What dispatch
+leaves out is described on the <a href="auto/#what-is-not-dispatched"><code>fastfields.auto</code></a>
+page.</p>
 <div class="admonition note">
 <p class="admonition-title"><code>dt_spline_*</code> returns <code>(dist, time)</code> on every backend</p>
 <p>The three point-to-spline operators return a 2-tuple, and all three
 namespaces return it in that order. <code>fastfields.cupy</code> returned
-<code>(time, dist)</code> until <a href="https://github.com/fastfields/fastfields/issues/38">fastfields#38</a>: a dispatcher that forwards
+<code>(time, dist)</code> until <a href="https://github.com/fastfields/fastfields/issues/38">fastfields#38</a>. A dispatcher that forwards
 arguments unchanged has nowhere to normalise a <em>result</em>, so the meaning of
 a dispatched return value depended on which array type you passed. The
-three names are part of the canonical surface the cross-backend
+names are part of the canonical surface that the cross-backend
 conformance suite checks, so a namespace cannot quietly drift again.</p>
 <p>Their <em>signatures</em> agreed later than their return order did.
 <code>fastfields.cupy</code> spelled the spline order <code>spline</code> and made
-<code>max_iter</code>/<code>tol</code>/<code>step</code> required positional arguments, where numpy and
-torch had keyword-only <code>order</code>/<code>bound</code> with defaults. All three now use
-the numpy/torch spelling, and signature drift — parameter names, kinds,
-order, defaults — fails CI in <code>tests/test_signature_conformance.py</code>
-rather than at a user's call.</p>
+<code>max_iter</code>, <code>tol</code> and <code>step</code> required positional arguments, where numpy and
+torch had keyword-only <code>order</code> and <code>bound</code> with defaults. All three now
+use the numpy and torch spelling, and any drift in parameter names, kinds,
+order or defaults fails CI in <code>tests/test_signature_conformance.py</code>
+instead of at a user's call.</p>
 </div>
 <h2 id="status">Status</h2>
 <p>fastfields is <strong>alpha</strong>. The table below is what is actually exposed and tested
@@ -1248,7 +1207,7 @@ before you install.</p>
 <tr>
 <td>Distance — point-to-mesh / point-to-spline</td>
 <td style="text-align: center;">🧪</td>
-<td style="text-align: center;">🧪¹</td>
+<td style="text-align: center;">🧪</td>
 <td style="text-align: center;">🧭</td>
 </tr>
 <tr>
@@ -1280,8 +1239,6 @@ before you install.</p>
 <p><strong>✅ works, covered by the CPU test suite</strong> &nbsp;·&nbsp; <strong>🧪 exposed but not
 yet covered by tests</strong> (shape contracts still being firmed up — use with care)
 &nbsp;·&nbsp; <strong>🧭 planned</strong> (see below).</p>
-<p>¹ PyTorch exposes point-to-mesh (<code>dt_mesh</code>) but not the point-to-spline
-variants.</p>
 <p>What "planned" means here:</p>
 <ul>
 <li><strong>GPU / CuPy</strong> (the only remaining 🧭). The CUDA kernels and the CuPy wrapper

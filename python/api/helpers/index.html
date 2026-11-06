@@ -1381,22 +1381,27 @@
 
     <div class="doc doc-contents first">
 
-        <p>Shared enums and argument-normalisation helpers for the fastfields packages.</p>
-<p>The <code>fastfields.numpy</code> / <code>fastfields.torch</code> / <code>fastfields.cupy</code> wrappers
-and the <code>fastfields.auto</code> dispatcher all need the same backend-agnostic
-logic: the :class:<code>Spline</code> / :class:<code>Bound</code> enums, the <code>order</code>/<code>bound</code>
-normalisers, and the resolution of <code>factor</code>/<code>shape</code>/<code>anchor</code> into the
-per-dim <code>scale</code> + scalar <code>shift</code> that the resize binding consumes. It lives
-here, in one dependency-free package, so each consumer imports it instead of
-carrying its own copy.</p>
-<p>This package is <strong>pure Python and dependency-free</strong> -- it imports nothing but
-the standard library, and in particular no numpy/torch/cupy and none of the
-compiled <code>fastfields.dlpack</code> bindings. That is the point of it existing
-separately: a fix to any of this logic ships as an ordinary pure-Python
-release, with no recompilation of the C++/CUDA chain and no per-platform wheel
-cycle.</p>
-<p><code>fastfields.helpers</code> is a sibling of <code>fastfields.dlpack</code>, not a layer over
-it -- neither package depends on the other.</p>
+        <p>Shared enums and argument normalisers for the fastfields namespaces.</p>
+<p><code>fastfields.numpy</code>, <code>fastfields.torch</code>, <code>fastfields.cupy</code> and
+<code>fastfields.auto</code> all need the same logic that does not depend on an array
+library:</p>
+<ul>
+<li>the <a class="autorefs autorefs-internal" title="Spline" href="./#fastfields.helpers.Spline"><code>Spline</code></a> and
+  <a class="autorefs autorefs-internal" title="Bound" href="./#fastfields.helpers.Bound"><code>Bound</code></a> enums and the normalisers that turn an
+  integer, an enum member or a name into one of them;</li>
+<li>the resolution of <code>factor</code>, <code>shape</code> and <code>anchor</code> into the per-axis <code>scale</code>
+  and scalar <code>shift</code> that the resampling kernels consume;</li>
+<li>the checks that decide whether the installed <code>fastfields-dlpack</code> is a CUDA
+  build.</li>
+</ul>
+<p>It lives here, in one place, so that each of them imports it instead of
+carrying a copy.</p>
+<p>The package is pure Python and imports nothing but the standard library: no
+NumPy, PyTorch or CuPy, and not the compiled <code>fastfields.dlpack</code> bindings. That
+is the reason it exists apart from them. A fix to this logic ships as an
+ordinary pure-Python release, without recompiling the C++/CUDA chain or
+rebuilding the per-platform wheels. It is a sibling of <code>fastfields.dlpack</code>,
+not a layer over it, and neither depends on the other.</p>
 
 
 
@@ -1434,7 +1439,14 @@ it -- neither package depends on the other.</p>
 
 
 
-        <p>Spline interpolation order (passed as the <code>spline</code> argument).</p>
+        <p>Order of the spline used for interpolation.</p>
+<p>The members are the integers 0 to 7, from <code>Nearest</code> (0), <code>Linear</code> (1),
+<code>Quadratic</code> (2) and <code>Cubic</code> (3) up to <code>FourthOrder</code>, <code>FifthOrder</code>,
+<code>SixthOrder</code> and <code>SeventhOrder</code> (4 to 7).</p>
+<p>The wrappers take it as the <code>order</code> argument, as an integer, as a member of
+this enum or as a name such as <code>"cubic"</code>; see
+<a class="autorefs autorefs-internal" title="as_spline" href="./#fastfields.helpers.as_spline"><code>as_spline</code></a>. The raw <code>fastfields.dlpack</code>
+bindings and the C++ library call the same argument <code>spline</code>.</p>
 
 
 
@@ -1482,7 +1494,62 @@ it -- neither package depends on the other.</p>
 
 
 
-        <p>Boundary condition (passed as the <code>bound</code> argument).</p>
+        <p>Boundary condition, applied to every spatial axis.</p>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Value</th>
+<th>Beyond the last voxel, the signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Zero</code></td>
+<td>0</td>
+<td>is zero</td>
+</tr>
+<tr>
+<td><code>Replicate</code></td>
+<td>1</td>
+<td>repeats the last voxel (coordinates are clipped)</td>
+</tr>
+<tr>
+<td><code>DCT1</code></td>
+<td>2</td>
+<td>is symmetric about the centre of the last voxel</td>
+</tr>
+<tr>
+<td><code>DCT2</code></td>
+<td>3</td>
+<td>is symmetric about the edge of the last voxel</td>
+</tr>
+<tr>
+<td><code>DST1</code></td>
+<td>4</td>
+<td>is antisymmetric about the centre of the last voxel</td>
+</tr>
+<tr>
+<td><code>DST2</code></td>
+<td>5</td>
+<td>is antisymmetric about the edge of the last voxel</td>
+</tr>
+<tr>
+<td><code>DFT</code></td>
+<td>6</td>
+<td>wraps around (circular)</td>
+</tr>
+<tr>
+<td><code>NoCheck</code></td>
+<td>7</td>
+<td>is not handled: coordinates are assumed inbound</td>
+</tr>
+</tbody>
+</table>
+<p><code>DCT2</code> is the Neumann condition and <code>DST2</code> the Dirichlet one.</p>
+<p>The wrappers take it as the <code>bound</code> argument, as an integer, as a member of
+this enum or as a name such as <code>"dct2"</code>; see
+<a class="autorefs autorefs-internal" title="as_bound" href="./#fastfields.helpers.as_bound"><code>as_bound</code></a>.</p>
 
 
 
@@ -1527,7 +1594,15 @@ it -- neither package depends on the other.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Return whether <code>backend</code> names a CUDA build of fastfields-dlpack.</p>
+        <p>Tell whether a backend label names a CUDA build of <code>fastfields-dlpack</code>.</p>
+<p>The label is what <code>fastfields.dlpack.backend</code> reports: <code>"cpu"</code>, <code>"cu126"</code>
+and so on, or <code>None</code> for a build that carries no label, such as an
+unversioned source checkout.</p>
+<p><code>None</code> means unknown, not CPU. A caller that rejects non-CUDA builds should
+therefore test <code>backend is not None and not is_cuda_backend(backend)</code>
+instead of negating this function: a source build cannot be verified, and
+refusing it would block GPU development from a checkout for no gain in
+safety.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1550,9 +1625,7 @@ it -- neither package depends on the other.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A compute-backend label as exposed by <code>fastfields.dlpack.backend</code>:
-<code>"cpu"</code>, <code>"cu126"</code>, ... or <code>None</code> when the installed build
-carries no label (an unversioned source checkout).</p>
+                <p>A compute-backend label.</p>
               </div>
             </td>
             <td>
@@ -1578,12 +1651,8 @@ carries no label (an unversioned source checkout).</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>True for <code>cu&lt;digits&gt;</code>, False for anything else -- <code>None</code>
-included. <code>None</code> means <em>unknown</em>, not <em>CPU</em>, so callers that reject
-a non-CUDA build should test <code>backend is not None and not
-is_cuda_backend(backend)</code> rather than negating this directly: a
-source build is unverifiable, and refusing it would block GPU
-development from a checkout for no safety gain.</p>
+                <p>True for <code>cu</code> followed by digits, False for anything else, <code>None</code>
+included.</p>
               </div>
             </td>
           </tr>
@@ -1608,11 +1677,11 @@ development from a checkout for no safety gain.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Build the "this needs a CUDA build of fastfields-dlpack" message.</p>
-<p>Shared by :mod:<code>fastfields.cupy</code> (which refuses at import) and
-:mod:<code>fastfields.torch</code> (which refuses only when a CUDA tensor meets a
-CPU-only build) so that one wording, naming both the index URL and the
-command that fixes it, covers both.</p>
+        <p>Build the error message for a <code>fastfields-dlpack</code> build without CUDA.</p>
+<p><a class="autorefs autorefs-internal" title="fastfields.cupy" href="../cupy/#fastfields.cupy"><code>fastfields.cupy</code></a> raises it at import, and
+<a class="autorefs autorefs-internal" title="fastfields.torch" href="../torch/#fastfields.torch"><code>fastfields.torch</code></a> when a CUDA tensor meets a CPU-only
+build. Sharing the function gives both the same wording, which names the
+index URL and the <code>pip</code> command that fixes the problem.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1635,7 +1704,7 @@ command that fixes it, covers both.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The importing namespace, e.g. <code>"fastfields.cupy"</code>.</p>
+                <p>The namespace that is refusing, for example <code>"fastfields.cupy"</code>.</p>
               </div>
             </td>
             <td>
@@ -1667,8 +1736,8 @@ command that fixes it, covers both.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A clause completing "... cannot work because ...", stating what in
-the caller's situation requires CUDA kernels.</p>
+                <p>A clause that completes "cannot work because ...", saying what in the
+caller's situation requires CUDA kernels.</p>
               </div>
             </td>
             <td>
@@ -1694,7 +1763,7 @@ the caller's situation requires CUDA kernels.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The full multi-line message.</p>
+                <p>The complete, multi-line message.</p>
               </div>
             </td>
           </tr>
@@ -1719,10 +1788,87 @@ the caller's situation requires CUDA kernels.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Normalise a spline-order argument to an <code>int</code> in <code>0..7</code>.</p>
-<p>Accepts an integer, a :class:<code>Spline</code> enum, or a friendly string alias
-(e.g. <code>"cubic"</code>). Raises <code>ValueError</code> for an unknown alias or an
-out-of-range integer.</p>
+        <p>Turn a spline-order argument into an integer from 0 to 7.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>value</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a> or <a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a> or <a class="autorefs autorefs-internal" title="Spline (fastfields.helpers.Spline)" href="./#fastfields.helpers.Spline">Spline</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>An integer, a <a class="autorefs autorefs-internal" title="Spline" href="./#fastfields.helpers.Spline"><code>Spline</code></a> member, or one of
+the names <code>"nearest"</code> (or <code>"constant"</code>), <code>"linear"</code>, <code>"quadratic"</code>,
+<code>"cubic"</code>, <code>"fourth"</code>, <code>"fifth"</code>, <code>"sixth"</code> and <code>"seventh"</code>, in any
+case.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The spline order.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError">ValueError</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the name is unknown or the integer is outside 0 to 7.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -1742,10 +1888,88 @@ out-of-range integer.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Normalise a boundary-condition argument to an <code>int</code> in <code>0..7</code>.</p>
-<p>Accepts an integer, a :class:<code>Bound</code> enum, or a friendly string alias
-(e.g. <code>"dct2"</code>, <code>"wrap"</code>). Raises <code>ValueError</code> for an unknown alias
-or an out-of-range integer.</p>
+        <p>Turn a boundary-condition argument into an integer from 0 to 7.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>value</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a> or <a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a> or <a class="autorefs autorefs-internal" title="Bound (fastfields.helpers.Bound)" href="./#fastfields.helpers.Bound">Bound</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>An integer, a <a class="autorefs autorefs-internal" title="Bound" href="./#fastfields.helpers.Bound"><code>Bound</code></a> member, or a name, in
+any case. The names are <code>"zero"</code> (or <code>"zeros"</code>), <code>"replicate"</code> (or
+<code>"nearest"</code>), <code>"dct1"</code>, <code>"dct2"</code> (or <code>"neumann"</code>, <code>"reflect"</code>),
+<code>"dst1"</code>, <code>"dst2"</code> (or <code>"dirichlet"</code>), <code>"dft"</code> (or <code>"wrap"</code>,
+<code>"circular"</code>) and <code>"nocheck"</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The boundary condition as an integer.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError">ValueError</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the name is unknown or the integer is outside 0 to 7.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -1765,9 +1989,100 @@ or an out-of-range integer.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Normalise a shape argument to a list of <code>int</code> of length <code>ndim</code>.</p>
-<p>A scalar <code>int</code> is broadcast to <code>ndim</code> entries. Raises <code>ValueError</code> if
-an explicit sequence does not have length <code>ndim</code>.</p>
+        <p>Expand a shape argument to a list of <code>ndim</code> integers.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>shape</code>
+            </td>
+            <td>
+                  <code>int or sequence of int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A single size, used for every axis, or one size per axis.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ndim</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of axes.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>list of int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The sizes, one per axis.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError">ValueError</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If a sequence is given and its length is not <code>ndim</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -1787,9 +2102,95 @@ an explicit sequence does not have length <code>ndim</code>.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Infer the number of trailing spatial dimensions to resize.</p>
-<p>An explicit <code>ndim</code> wins; otherwise a sequence <code>shape</code> or <code>factor</code>
-implies its length; failing that, <code>1</code>.</p>
+        <p>Work out how many trailing axes a resampling call applies to.</p>
+<p>The rule is, in order: an explicit <code>ndim</code> wins; otherwise the length of
+<code>shape</code> or <code>factor</code>, if one of them is a sequence; otherwise 1.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>ndim</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a> or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The explicit number of axes, if given.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>factor</code>
+            </td>
+            <td>
+                  <code>float or sequence of float or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The size multiplier.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>shape</code>
+            </td>
+            <td>
+                  <code>int or sequence of int or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The output size.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The number of trailing axes.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -1809,7 +2210,77 @@ implies its length; failing that, <code>1</code>.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Validate that <code>ndim</code> is in <code>1..arr_ndim</code> (else <code>ValueError</code>).</p>
+        <p>Check that <code>ndim</code> is between 1 and the number of axes of the array.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>ndim</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of trailing axes to operate on.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>arr_ndim</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of axes of the array.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError">ValueError</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>ndim</code> is outside <code>1..arr_ndim</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -1829,10 +2300,136 @@ implies its length; failing that, <code>1</code>.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Resolve the output spatial shape from <code>factor</code> or <code>shape</code>.</p>
-<p><code>factor</code> and <code>shape</code> are mutually exclusive; with neither, the output
-keeps the input spatial shape (identity). A scalar <code>factor</code> is broadcast
-to <code>ndim</code> entries; each output size is <code>max(1, round(in * factor))</code>.</p>
+        <p>Work out the output size of a resampling call.</p>
+<p>Give <code>shape</code> for an explicit size, or <code>factor</code> to scale the input size;
+they are mutually exclusive, and with neither the size is unchanged. A
+scalar <code>factor</code> applies to every axis, and each size becomes <code>max(1,
+round(n * factor))</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>spatial_in</code>
+            </td>
+            <td>
+                  <code>sequence of int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Input sizes of the resampled axes.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>ndim</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of resampled axes.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>factor</code>
+            </td>
+            <td>
+                  <code>float or sequence of float or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The size multiplier.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>shape</code>
+            </td>
+            <td>
+                  <code>int or sequence of int or None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The output size. When given it takes precedence over <code>factor</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>tuple of int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The output sizes.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError">ValueError</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>shape</code> or <code>factor</code> is a sequence whose length is not <code>ndim</code>.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -1852,18 +2449,45 @@ to <code>ndim</code> entries; each output size is <code>max(1, round(in * factor
 
     <div class="doc doc-contents ">
 
-        <p>Map a torch-interpol <code>anchor</code> to a per-dim scale and scalar shift.</p>
-<p>The fastfields resize kernel samples input coordinate
-<code>scale[d] * loc + shift * (scale[d] - 1)</code> for output index <code>loc</code>. The
-four anchors of <code>interpol.resize</code> map onto <code>(scale, shift)</code> as:</p>
-<p>==========  =================  =======
-anchor      scale[d]           shift
-==========  =================  =======
-<code>centers</code> <code>(in-1)/(out-1)</code> <code>0.0</code>
-<code>edges</code>   <code>in/out</code>         <code>0.5</code>
-<code>first</code>   <code>in/out</code>         <code>0.0</code>
-<code>last</code>    <code>in/out</code>         <code>1.0</code>
-==========  =================  =======</p>
+        <p>Turn an <code>anchor</code> into the <code>scale</code> and <code>shift</code> of the resampling kernel.</p>
+<p>For output index <code>loc</code>, the kernel samples the input at
+<code>scale[d] * loc + shift * (scale[d] - 1)</code> along axis <code>d</code>. The four anchors
+choose which points of the two grids line up:</p>
+<table>
+<thead>
+<tr>
+<th><code>anchor</code></th>
+<th><code>scale[d]</code></th>
+<th><code>shift</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>"centers"</code></td>
+<td><code>(in-1) / (out-1)</code></td>
+<td><code>0.0</code></td>
+</tr>
+<tr>
+<td><code>"edges"</code></td>
+<td><code>in / out</code></td>
+<td><code>0.5</code></td>
+</tr>
+<tr>
+<td><code>"first"</code></td>
+<td><code>in / out</code></td>
+<td><code>0.0</code></td>
+</tr>
+<tr>
+<td><code>"last"</code></td>
+<td><code>in / out</code></td>
+<td><code>1.0</code></td>
+</tr>
+</tbody>
+</table>
+<p>With <code>"centers"</code> the first and last samples coincide; the scale is 1 along
+an axis where either size is 1. With <code>"edges"</code> the outer edges of the
+voxels coincide, with <code>"first"</code> the first voxel is the anchor and with
+<code>"last"</code> the last one. The names follow <code>interpol.resize</code>.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1886,9 +2510,8 @@ anchor      scale[d]           shift
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Anchor name or abbreviation (<code>centers</code>/<code>edges</code>/<code>first</code>/<code>last</code>
-or <code>c</code>/<code>e</code>/<code>f</code>/<code>l</code>); matched case-insensitively on the first
-letter.</p>
+                <p><code>"centers"</code>, <code>"edges"</code>, <code>"first"</code> or <code>"last"</code>, or their initial
+letters. Only the first letter is looked at, in any case.</p>
               </div>
             </td>
             <td>
@@ -1904,7 +2527,7 @@ letter.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Input and output spatial sizes (length <code>ndim</code>).</p>
+                <p>Input and output sizes of the resampled axes, <code>ndim</code> values each.</p>
               </div>
             </td>
             <td>
@@ -1920,7 +2543,7 @@ letter.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Input and output spatial sizes (length <code>ndim</code>).</p>
+                <p>Input and output sizes of the resampled axes, <code>ndim</code> values each.</p>
               </div>
             </td>
             <td>
@@ -1936,7 +2559,7 @@ letter.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Number of spatial dimensions.</p>
+                <p>Number of resampled axes.</p>
               </div>
             </td>
             <td>
@@ -1962,7 +2585,7 @@ letter.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Per-dim input-index step per output-index step.</p>
+                <p>Input-index step per output-index step, one value per axis.</p>
               </div>
             </td>
           </tr>
@@ -1972,7 +2595,7 @@ letter.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Scalar sampling shift shared across dimensions.</p>
+                <p>The shift, shared by all axes.</p>
               </div>
             </td>
           </tr>
@@ -1995,7 +2618,7 @@ letter.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If <code>anchor</code> is empty or its first letter is not one of <code>c/e/f/l</code>.</p>
+                <p>If <code>anchor</code> does not start with <code>c</code>, <code>e</code>, <code>f</code> or <code>l</code>.</p>
               </div>
             </td>
           </tr>

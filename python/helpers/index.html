@@ -919,21 +919,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-it-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Why it exists
+        A first example
       </span>
     </span>
   </a>
@@ -945,6 +934,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         What's inside
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-it-is-a-separate-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Why it is a separate namespace
       </span>
     </span>
   </a>
@@ -1125,21 +1125,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-it-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Why it exists
+        A first example
       </span>
     </span>
   </a>
@@ -1151,6 +1140,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         What's inside
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-it-is-a-separate-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Why it is a separate namespace
       </span>
     </span>
   </a>
@@ -1178,35 +1178,26 @@
 
 
 <h1 id="fastfieldshelpers">fastfields.helpers</h1>
-<p><strong><code>fastfields.helpers</code></strong> is the shared, dependency-free Python layer of the
-fastfields stack: the <code>Spline</code> and <code>Bound</code> enums, and the argument-normalisation
-helpers used by <code>fastfields.numpy</code>, <code>fastfields.torch</code>, <code>fastfields.cupy</code> and
-the <code>fastfields.auto</code> dispatcher.</p>
+<p><code>fastfields.helpers</code> is the part of the fastfields stack that does not depend
+on an array library. It holds the <code>Spline</code> and <code>Bound</code> enums and the helpers
+that turn user-friendly arguments into what the compiled library expects. It is
+shared by <code>fastfields.numpy</code>, <code>fastfields.torch</code>, <code>fastfields.cupy</code> and the
+<code>fastfields.auto</code> dispatcher.</p>
 <h2 id="install">Install</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>fastfields
 </code></pre></div>
-<p>It ships with the <code>fastfields</code> distribution; there is nothing extra
-to install for it. The module itself imports only the standard
-library -- no array backend, and none of the compiled bindings.</p>
-<h2 id="use-it">Use it</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastfields.helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Spline</span><span class="p">,</span> <span class="n">Bound</span><span class="p">,</span> <span class="n">as_spline</span><span class="p">,</span> <span class="n">as_bound</span>
+<p>It ships with the <code>fastfields</code> distribution, so there is nothing extra to
+install. The module imports only the standard library: no array backend and
+none of the compiled bindings.</p>
+<h2 id="a-first-example">A first example</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">fastfields.helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bound</span><span class="p">,</span> <span class="n">Spline</span><span class="p">,</span> <span class="n">as_bound</span><span class="p">,</span> <span class="n">as_spline</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">as_spline</span><span class="p">(</span><span class="s2">"cubic"</span><span class="p">)</span>        <span class="c1"># 3</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">as_bound</span><span class="p">(</span><span class="s2">"wrap"</span><span class="p">)</span>          <span class="c1"># 6  == int(Bound.DFT)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">as_spline</span><span class="p">(</span><span class="s2">"cubic"</span><span class="p">)</span>  <span class="c1"># 3</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">as_bound</span><span class="p">(</span><span class="s2">"wrap"</span><span class="p">)</span>  <span class="c1"># 6, which is int(Bound.DFT)</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">as_spline</span><span class="p">(</span><span class="n">Spline</span><span class="o">.</span><span class="n">Linear</span><span class="p">)</span>  <span class="c1"># 1</span>
 </code></pre></div>
-<h2 id="why-it-exists">Why it exists</h2>
-<p>These helpers used to live inside <code>fastfields-dlpack</code>, next to the
-compiled nanobind extension, so a one-line fix to a string alias or a
-rounding rule could only reach users through a full compiled-wheel
-release cycle on every platform. They were split out to escape that,
-and the escape survives the merge: they now ship in the <code>fastfields</code>
-distribution, which is still a single universal (<code>py3-none-any</code>)
-wheel with no compiled content, so a fix to them is still an ordinary
-pure-Python release.</p>
-<p>What this module may depend on has not changed either: nothing. It
-imports no array library and, in particular, never
-<code>fastfields.dlpack</code> -- a subprocess test enforces that.</p>
+<p>The normalisers are what let every <code>order</code> and <code>bound</code> argument in the other
+namespaces accept an <code>int</code>, an enum member or a name.</p>
 <h2 id="whats-inside">What's inside</h2>
 <table>
 <thead>
@@ -1218,23 +1209,38 @@ imports no array library and, in particular, never
 <tbody>
 <tr>
 <td><strong>Enums</strong></td>
-<td><code>Spline</code> (orders 0–7), <code>Bound</code> (8 boundary conditions)</td>
+<td><a class="autorefs autorefs-internal" title="Spline" href="../api/helpers/#fastfields.helpers.Spline"><code>Spline</code></a> (orders 0 to 7) and <a class="autorefs autorefs-internal" title="Bound" href="../api/helpers/#fastfields.helpers.Bound"><code>Bound</code></a> (eight boundary conditions)</td>
 </tr>
 <tr>
 <td><strong>Normalisers</strong></td>
-<td><code>as_spline</code>, <code>as_bound</code> — accept an <code>int</code>, an enum member or a friendly string</td>
+<td><a class="autorefs autorefs-internal" title="as_spline" href="../api/helpers/#fastfields.helpers.as_spline"><code>as_spline</code></a> and <a class="autorefs autorefs-internal" title="as_bound" href="../api/helpers/#fastfields.helpers.as_bound"><code>as_bound</code></a> accept an <code>int</code>, an enum member or a name</td>
 </tr>
 <tr>
-<td><strong>Shape / ndim</strong></td>
-<td><code>normalize_shape</code>, <code>infer_ndim</code>, <code>check_ndim</code>, <code>resolve_out_spatial</code></td>
+<td><strong>Shapes</strong></td>
+<td><a class="autorefs autorefs-internal" title="normalize_shape" href="../api/helpers/#fastfields.helpers.normalize_shape"><code>normalize_shape</code></a>, <a class="autorefs autorefs-internal" title="infer_ndim" href="../api/helpers/#fastfields.helpers.infer_ndim"><code>infer_ndim</code></a>, <a class="autorefs autorefs-internal" title="check_ndim" href="../api/helpers/#fastfields.helpers.check_ndim"><code>check_ndim</code></a> and <a class="autorefs autorefs-internal" title="resolve_out_spatial" href="../api/helpers/#fastfields.helpers.resolve_out_spatial"><code>resolve_out_spatial</code></a> work out the arguments of a resampling call</td>
 </tr>
 <tr>
 <td><strong>Anchors</strong></td>
-<td><code>anchor_scale_shift</code> — torch-interpol anchor → per-dim <code>scale</code> + scalar <code>shift</code></td>
+<td><a class="autorefs autorefs-internal" title="anchor_scale_shift" href="../api/helpers/#fastfields.helpers.anchor_scale_shift"><code>anchor_scale_shift</code></a> turns an <code>interpol.resize</code> anchor into a per-axis <code>scale</code> and a scalar <code>shift</code></td>
+</tr>
+<tr>
+<td><strong>Compute backend</strong></td>
+<td><a class="autorefs autorefs-internal" title="is_cuda_backend" href="../api/helpers/#fastfields.helpers.is_cuda_backend"><code>is_cuda_backend</code></a> and <a class="autorefs autorefs-internal" title="cuda_backend_message" href="../api/helpers/#fastfields.helpers.cuda_backend_message"><code>cuda_backend_message</code></a> decide whether the installed <code>fastfields-dlpack</code> is a CUDA build, and word the error when it is not</td>
 </tr>
 </tbody>
 </table>
-<p>See the <a href="../api/helpers/">API reference</a> for full signatures and options.</p>
+<h2 id="why-it-is-a-separate-namespace">Why it is a separate namespace</h2>
+<p>These helpers used to live inside <code>fastfields-dlpack</code>, next to the compiled
+extension. A one-line fix to a string alias or a rounding rule could then only
+reach users through a full compiled-wheel release on every platform. They were
+split out to escape that, and the escape survives the merge into one
+distribution: <code>fastfields</code> is still a single universal <code>py3-none-any</code> wheel
+with no compiled content, so fixing a helper is an ordinary pure-Python
+release.</p>
+<p>For the same reason the module must keep depending on nothing. It imports no
+array library and, in particular, never <code>fastfields.dlpack</code>; a subprocess test
+enforces that.</p>
+<p>See the <a href="../api/helpers/">API reference</a> for the full signatures.</p>
 
 
 

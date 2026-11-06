@@ -691,10 +691,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -710,10 +710,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="What&#x27;s inside">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-is-differentiable" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -723,17 +722,12 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
-  <a href="#what-this-wrapper-does-not-expose" class="md-nav__link">
+  <a href="#what-this-package-does-not-wrap" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What this wrapper does not expose
+        What this package does not wrap
       </span>
     </span>
   </a>
@@ -1142,10 +1136,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -1161,10 +1155,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="What&#x27;s inside">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-is-differentiable" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1174,17 +1167,12 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
-  <a href="#what-this-wrapper-does-not-expose" class="md-nav__link">
+  <a href="#what-this-package-does-not-wrap" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What this wrapper does not expose
+        What this package does not wrap
       </span>
     </span>
   </a>
@@ -1212,30 +1200,28 @@
 
 
 <h1 id="fastfieldstorch">fastfields.torch</h1>
-<p><strong><code>fastfields.torch</code></strong> brings the fastfields field operators to <strong>PyTorch</strong>, and
-the core operations are <strong>fully differentiable</strong> — drop them into a model and
-gradients flow straight through. Functions take and return <code>torch</code> tensors and
-allocate their own outputs.</p>
+<p><code>fastfields.torch</code> runs the fastfields operators on PyTorch tensors, and most
+of them are differentiable: put them inside a model and gradients flow
+straight through. Functions take tensors and return newly allocated tensors.</p>
 <h2 id="install">Install</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"fastfields[torch]"</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>--extra-index-url<span class="w"> </span>https://fastfields.github.io/whl/cpu/
 </code></pre></div>
-<p>CPU tensors work on any build. A CUDA tensor needs a CUDA build of
-<code>fastfields-dlpack</code>, which means installing from a <code>cu*</code> lane of the
-index instead of <code>cpu/</code>; pass one and the same code runs on the GPU.
-Hand a CUDA tensor to a CPU-only build and the call raises a
-<code>RuntimeError</code> naming the lane to install -- it is checked when the
-tensor arrives, not at import, precisely so that the CPU path keeps
+<p>CPU tensors work with any build of <code>fastfields-dlpack</code>. A CUDA tensor needs a
+CUDA build, which means installing from one of the <code>cu*</code> lanes of the index
+instead of <code>cpu/</code>; then the same code runs on the GPU. Handing a CUDA tensor to
+a CPU-only build raises a <code>RuntimeError</code> that names the lane to install. The
+check happens when the tensor arrives and not at import, so the CPU path keeps
 working everywhere.</p>
-<h2 id="use-it">Use it</h2>
+<h2 id="a-first-example">A first example</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fastfields.torch</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ff</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">mat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># packed C=3</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">mat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># packed, C=3</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">vec</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">out</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">sym_matvec</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span>     <span class="c1"># H @ vec, differentiable</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">out</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>              <span class="c1"># gradients land on mat and vec</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">out</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">sym_matvec</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">vec</span><span class="p">)</span>  <span class="c1"># H @ vec, one 3x3 matrix per row</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">out</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># gradients land on both mat and vec</span>
 </code></pre></div>
 <h2 id="whats-inside">What's inside</h2>
 <table>
@@ -1248,61 +1234,74 @@ working everywhere.</p>
 <tbody>
 <tr>
 <td><strong>Positive-definite linear algebra</strong></td>
-<td><code>sym_matvec</code>, <code>sym_solve</code> (differentiable); <code>sym_invert</code>, <code>sym_addmatvec_</code>, <code>sym_submatvec_</code> over whole fields of small symmetric matrices</td>
+<td><a class="autorefs autorefs-internal" title="sym_matvec" href="../api/torch/#fastfields.torch.sym_matvec"><code>sym_matvec</code></a> and <a class="autorefs autorefs-internal" title="sym_solve" href="../api/torch/#fastfields.torch.sym_solve"><code>sym_solve</code></a> (differentiable); <a class="autorefs autorefs-internal" title="sym_invert" href="../api/torch/#fastfields.torch.sym_invert"><code>sym_invert</code></a>, <a class="autorefs autorefs-internal" title="sym_addmatvec_" href="../api/torch/#fastfields.torch.sym_addmatvec_"><code>sym_addmatvec_</code></a> and <a class="autorefs autorefs-internal" title="sym_submatvec_" href="../api/torch/#fastfields.torch.sym_submatvec_"><code>sym_submatvec_</code></a>, over whole fields of small symmetric matrices</td>
 </tr>
 <tr>
 <td><strong>Resampling</strong></td>
-<td><code>resample</code> (spline up/down-sampling), <code>restriction</code> (its adjoint), <code>spline_coeff</code> (coefficient prefilter) — all differentiable</td>
+<td><a class="autorefs autorefs-internal" title="resample" href="../api/torch/#fastfields.torch.resample"><code>resample</code></a> (spline up- and down-sampling), <a class="autorefs autorefs-internal" title="restriction" href="../api/torch/#fastfields.torch.restriction"><code>restriction</code></a> (its adjoint) and <a class="autorefs autorefs-internal" title="spline_coeff" href="../api/torch/#fastfields.torch.spline_coeff"><code>spline_coeff</code></a> (the coefficient prefilter), all differentiable</td>
 </tr>
 <tr>
-<td><strong>Spline gather/scatter</strong></td>
-<td><code>pull</code>, <code>push</code>, <code>count</code>, <code>grad</code> — all differentiable with respect to the sampling <code>grid</code></td>
+<td><strong>Spline sampling (pushpull)</strong></td>
+<td><a class="autorefs autorefs-internal" title="pull" href="../api/torch/#fastfields.torch.pull"><code>pull</code></a>, <a class="autorefs autorefs-internal" title="push" href="../api/torch/#fastfields.torch.push"><code>push</code></a>, <a class="autorefs autorefs-internal" title="count" href="../api/torch/#fastfields.torch.count"><code>count</code></a> and <a class="autorefs autorefs-internal" title="grad" href="../api/torch/#fastfields.torch.grad"><code>grad</code></a>, all differentiable with respect to the sampling <code>grid</code></td>
 </tr>
 <tr>
 <td><strong>Distance transforms</strong></td>
-<td><code>dt_euclidean</code>, <code>dt_l1</code>, <code>dt_mesh</code>, and point-to-spline <code>dt_spline_table</code> / <code>dt_spline_brent</code> / <code>dt_spline_gaussnewton</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_euclidean" href="../api/torch/#fastfields.torch.dt_euclidean"><code>dt_euclidean</code></a>, <a class="autorefs autorefs-internal" title="dt_l1" href="../api/torch/#fastfields.torch.dt_l1"><code>dt_l1</code></a>, <a class="autorefs autorefs-internal" title="dt_mesh" href="../api/torch/#fastfields.torch.dt_mesh"><code>dt_mesh</code></a> and point-to-spline <a class="autorefs autorefs-internal" title="dt_spline_table" href="../api/torch/#fastfields.torch.dt_spline_table"><code>dt_spline_table</code></a>, <a class="autorefs autorefs-internal" title="dt_spline_brent" href="../api/torch/#fastfields.torch.dt_spline_brent"><code>dt_spline_brent</code></a> and <a class="autorefs autorefs-internal" title="dt_spline_gaussnewton" href="../api/torch/#fastfields.torch.dt_spline_gaussnewton"><code>dt_spline_gaussnewton</code></a></td>
 </tr>
 <tr>
 <td><strong>Regularisers</strong></td>
-<td><code>field_*</code> (multi-channel field, per-channel penalties) and <code>flow_*</code> (vector flow, scalar penalties + the Lamé <code>shears</code>/<code>div</code> terms): the operator <code>*_matvec</code>, its diagonal <code>*_diag</code>, its stencil <code>*_kernel</code>, the <code>*_add…</code>/<code>*_sub…</code> accumulate forms of each, the RLS/JRLS-weighted <code>*_rls</code> variants, <code>*_relax</code>, and <code>*_forward</code> / <code>*_precond</code></td>
+<td><code>field_*</code> for a multi-channel field, with one penalty per channel, and <code>flow_*</code> for a vector flow, with scalar penalties plus the Lamé <code>shears</code> and <code>div</code> terms. Each family has the operator (<code>*_matvec</code>), its diagonal (<code>*_diag</code>), its stencil (<code>*_kernel</code>), accumulate forms of each (<code>*_add…</code> and <code>*_sub…</code>), weighted variants (<code>*_rls</code>), <code>*_relax</code>, and <code>*_forward</code> and <code>*_precond</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="what-is-differentiable">What is differentiable</h3>
-<p>Differentiable: <code>sym_matvec</code>, <code>sym_solve</code>, <code>resample</code>, <code>restriction</code>,
-<code>spline_coeff</code>, all four pushpull operators (<code>pull</code>, <code>push</code>, <code>count</code>, <code>grad</code> —
-with respect to the field <em>and</em> the sampling coordinates), and the regulariser
-operators including <code>field_forward</code> / <code>field_precond</code> and their flow twins.</p>
-<p><code>grad</code> deserves a note: it is itself a derivative operator, so differentiating
-it produces second-order terms — which is the point, since an image gradient
-computed inside a loss has to be differentiable for the deformation that
-produced <code>grid</code> to be learnable. Its <code>abs=True</code> mode is a majorisation, and
-its backward is the adjoint of the majorised operator rather than a true
-Jacobian; use it as the majorisation it is.</p>
-<p>Not differentiable, but exposed for parity with <code>fastfields.numpy</code> /
-<code>fastfields.cupy</code>: the distance transforms (<code>dt_euclidean</code>, <code>dt_l1</code>,
-<code>dt_mesh</code>, the three <code>dt_spline_*</code>), <code>sym_invert</code>, and the <code>mat</code>/<code>vec</code>
-gradients of <code>sym_addmatvec_</code> / <code>sym_submatvec_</code>. Forward always runs, even
-when an input requires grad; only calling <code>.backward()</code> through the output
-raises, with a <code>RuntimeError</code> naming the op.</p>
-<h2 id="what-this-wrapper-does-not-expose">What this wrapper does not expose</h2>
-<p>Of the 58 operations in the underlying C++ hub this package wraps all but
-nine, and the nine split into two groups.</p>
-<p><strong>Adjoints that are used, not re-exported.</strong> <code>pull_backward</code>,
-<code>push_backward</code>, <code>count_backward</code>, <code>grad_backward</code> and <code>sym_matvec_backward</code>
-are the gradients behind the <code>autograd.Function</code> of each forward op, which is
-the supported way to reach them: call the forward op and <code>.backward()</code>.
+<p>A <em>field</em> is a multi-channel tensor with any number of channels. A <em>flow</em> is a
+vector field whose number of channels equals the number of spatial dimensions.
+The regularisers act on the <code>ndim</code> axes just before the channel axis, and
+<code>ndim</code> is not inferred: it defaults to 1, so pass <code>ndim=2</code> for a 2D image.</p>
+<h2 id="what-is-differentiable">What is differentiable</h2>
+<p>These operations support <code>.backward()</code>:</p>
+<ul>
+<li><code>sym_matvec</code>, with respect to <code>mat</code> and <code>vec</code>, and <code>sym_solve</code>, with respect
+  to <code>vec</code> only (<code>mat</code> must not require grad);</li>
+<li><code>resample</code>, <code>restriction</code> and <code>spline_coeff</code>, with respect to the input;</li>
+<li>all four sampling operators, with respect to the field and the sampling
+  coordinates (<code>count</code> only has the coordinates);</li>
+<li>the regulariser operators, including <code>field_forward</code> and <code>field_precond</code> and
+  their flow twins.</li>
+</ul>
+<p><code>grad</code> deserves a remark. It is itself a derivative operator, so
+differentiating it produces second-order terms. That is the point: an image
+gradient computed inside a loss has to be differentiable for the deformation
+that produced <code>grid</code> to be learnable. Its <code>abs=True</code> mode is a majorisation,
+and its backward pass is the adjoint of the majorised operator, not a true
+Jacobian. Use it as the majorisation it is.</p>
+<p>The remaining operations are exposed for parity with <code>fastfields.numpy</code> and
+<code>fastfields.cupy</code> but are not differentiable: the distance transforms
+(<code>dt_euclidean</code>, <code>dt_l1</code>, <code>dt_mesh</code> and the three <code>dt_spline_*</code>), <code>sym_invert</code>,
+the iterative solvers <code>field_relax</code> and <code>flow_relax</code> with their weighted
+variants, and the gradients of <code>sym_addmatvec_</code> and <code>sym_submatvec_</code> with
+respect to <code>mat</code> and <code>vec</code>. Their forward pass always runs, even when an input
+requires grad. Only calling <code>.backward()</code> through the output raises a
+<code>RuntimeError</code> that names the operation.</p>
+<h2 id="what-this-package-does-not-wrap">What this package does not wrap</h2>
+<p>Of the 58 operations of the underlying C++ library, this package wraps all but
+eight, in two groups.</p>
+<p><strong>Adjoints that are used, not re-exported.</strong> <code>pull_backward</code>, <code>push_backward</code>,
+<code>count_backward</code>, <code>grad_backward</code> and <code>sym_matvec_backward</code> are the gradients
+behind the <code>autograd.Function</code> of each forward operation. The supported way to
+reach them is to call the forward operation and then <code>.backward()</code>.
 Re-exporting them would be a second, unchecked spelling of a gradient, with
-five pre-zeroed buffers and an accumulate-vs-overwrite contract for the caller
-to get right. <code>fastfields.dlpack</code> has them raw.</p>
+pre-zeroed buffers and an accumulate-or-overwrite contract for the caller to
+get right. <code>fastfields.dlpack</code> has them raw.</p>
 <p><strong>Three solver entry points that need an autograd decision first.</strong>
 <code>field_precond_</code> and <code>flow_precond_</code> are in-place preconditioner solves, and
 <code>field_cg</code> runs an iterative solver whose gradient is a solve with the same
-operator. Both are worth doing and neither is a mechanical wrapper, so they
-are deliberately not here yet; <code>field_relax</code> is the in-place solver available
-today, and <code>fastfields.numpy</code> has all three for the non-autograd case.</p>
-<p><code>tests/test_api_coverage.py</code> fails if that list ever changes by accident.</p>
-<p>See the <a href="../api/torch/">API reference</a> for full signatures and options.</p>
+operator. Both are worth doing and neither is a mechanical wrapper, so they are
+not here yet. <code>field_relax</code> is the in-place solver available today, and
+<code>fastfields.numpy</code> has all three for the case without autograd.</p>
+<p><code>tests/test_api_coverage_torch.py</code> fails if that list ever changes by
+accident.</p>
+<p>See the <a href="../api/torch/">API reference</a> for the full signatures.</p>
 
 
 

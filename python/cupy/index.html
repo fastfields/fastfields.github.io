@@ -805,10 +805,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -844,10 +844,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-this-wrapper-does-not-expose" class="md-nav__link">
+  <a href="#what-this-package-does-not-wrap" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What this wrapper does not expose
+        What this package does not wrap
       </span>
     </span>
   </a>
@@ -1142,10 +1142,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#use-it" class="md-nav__link">
+  <a href="#a-first-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Use it
+        A first example
       </span>
     </span>
   </a>
@@ -1181,10 +1181,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-this-wrapper-does-not-expose" class="md-nav__link">
+  <a href="#what-this-package-does-not-wrap" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What this wrapper does not expose
+        What this package does not wrap
       </span>
     </span>
   </a>
@@ -1212,40 +1212,38 @@
 
 
 <h1 id="fastfieldscupy">fastfields.cupy</h1>
-<p><strong><code>fastfields.cupy</code></strong> runs the fastfields field operators on the <strong>GPU</strong>, straight
-on your <strong>CuPy arrays</strong>. Same API as the NumPy package, but the work happens in
+<p><code>fastfields.cupy</code> runs the fastfields operators on the GPU, directly on CuPy
+arrays. The API is the one of <code>fastfields.numpy</code>, but the work happens in
 device memory and is ordered on CuPy's current CUDA stream.</p>
-<p>CuPy itself isn't installed automatically — the right build depends on your CUDA
-version — so pull it in with the <code>cupy</code> extra (or install a matching
-<code>cupy-cuda12x</code> yourself).</p>
+<p>CuPy itself is not installed automatically, because the right build depends on
+your CUDA version. Install it with the <code>cupy</code> extra, or install a matching
+build such as <code>cupy-cuda12x</code> yourself.</p>
 <h2 id="install">Install</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"fastfields[cupy]"</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span>--extra-index-url<span class="w"> </span>https://fastfields.github.io/whl/cu130/
 </code></pre></div>
-<p>!!! warning "The extra selects CuPy; the index URL selects the CUDA
-    kernels"</p>
-<div class="highlight"><pre><span></span><code>These are two separate choices and only the second one can fail
-quietly. `pip install "fastfields[cupy]"` installs CuPy and
-succeeds against a **CPU-only** `fastfields-dlpack`, because
-`pip` has no way to say "any build with CUDA" -- the lane comes
-from the index folder you point it at. `import fastfields.cupy`
-then fails immediately, with a message naming the lane to
-install, because there is no CPU path here to fall back to.
-See [the monorepo note](monorepo.md) for why it works this way.
-
-No `cu*` lane is published yet. Until one is, this install has
-nothing to resolve to -- the
-[index](https://fastfields.github.io/whl/) lists the lanes that actually exist.
-</code></pre></div>
-<h2 id="use-it">Use it</h2>
+<div class="admonition warning">
+<p class="admonition-title">The extra selects CuPy; the index URL selects the CUDA kernels</p>
+<p>These are two separate choices, and only the second one can fail quietly.
+<code>pip install "fastfields[cupy]"</code> installs CuPy and succeeds even against a
+CPU-only <code>fastfields-dlpack</code>, because <code>pip</code> has no way to say "any build
+with CUDA": the lane comes from the index folder you point it at.
+<code>import fastfields.cupy</code> then fails at once, with a message naming the lane
+to install, because there is no CPU path to fall back to. See <a href="../monorepo/">the
+packaging note</a> for why it works this way.</p>
+<p>No <code>cu*</code> lane is published yet. Until one is, this install has nothing to
+resolve to. The <a href="https://fastfields.github.io/whl/">wheel index</a> lists the
+lanes that exist.</p>
+</div>
+<h2 id="a-first-example">A first example</h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">fastfields.cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ff</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">mask</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="s2">"float32"</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">mask</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">feature</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">cp</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">"float32"</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">feature</span><span class="p">[:,</span> <span class="mi">128</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># features are 0, everything else is +inf</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>      <span class="c1"># new array; mask is untouched</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean_</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>            <span class="c1"># in-place variant, writes into mask</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">dist</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>  <span class="c1"># a new array; feature is untouched</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">ff</span><span class="o">.</span><span class="n">dt_euclidean_</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>  <span class="c1"># the in-place variant writes into feature</span>
 </code></pre></div>
 <h2 id="whats-inside">What's inside</h2>
 <table>
@@ -1258,33 +1256,38 @@ nothing to resolve to -- the
 <tbody>
 <tr>
 <td><strong>Distance transforms</strong></td>
-<td><code>dt_euclidean</code>, <code>dt_l1</code> (along the last axis); point-to-spline <code>dt_spline_table</code> / <code>dt_spline_brent</code> / <code>dt_spline_gaussnewton</code>; point-to-mesh <code>dt_mesh</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_euclidean" href="../api/cupy/#fastfields.cupy.dt_euclidean"><code>dt_euclidean</code></a> and <a class="autorefs autorefs-internal" title="dt_l1" href="../api/cupy/#fastfields.cupy.dt_l1"><code>dt_l1</code></a> along the last axis; point-to-spline <a class="autorefs autorefs-internal" title="dt_spline_table" href="../api/cupy/#fastfields.cupy.dt_spline_table"><code>dt_spline_table</code></a>, <a class="autorefs autorefs-internal" title="dt_spline_brent" href="../api/cupy/#fastfields.cupy.dt_spline_brent"><code>dt_spline_brent</code></a> and <a class="autorefs autorefs-internal" title="dt_spline_gaussnewton" href="../api/cupy/#fastfields.cupy.dt_spline_gaussnewton"><code>dt_spline_gaussnewton</code></a>; point-to-mesh <a class="autorefs autorefs-internal" title="dt_mesh" href="../api/cupy/#fastfields.cupy.dt_mesh"><code>dt_mesh</code></a></td>
 </tr>
 <tr>
 <td><strong>Positive-definite linear algebra</strong></td>
-<td><code>sym_matvec</code>, <code>sym_addmatvec_</code>, <code>sym_submatvec_</code>, <code>sym_solve</code>, <code>sym_invert</code> over whole fields of small symmetric matrices</td>
+<td><a class="autorefs autorefs-internal" title="sym_matvec" href="../api/cupy/#fastfields.cupy.sym_matvec"><code>sym_matvec</code></a>, <a class="autorefs autorefs-internal" title="sym_addmatvec_" href="../api/cupy/#fastfields.cupy.sym_addmatvec_"><code>sym_addmatvec_</code></a>, <a class="autorefs autorefs-internal" title="sym_submatvec_" href="../api/cupy/#fastfields.cupy.sym_submatvec_"><code>sym_submatvec_</code></a>, <a class="autorefs autorefs-internal" title="sym_solve" href="../api/cupy/#fastfields.cupy.sym_solve"><code>sym_solve</code></a> and <a class="autorefs autorefs-internal" title="sym_invert" href="../api/cupy/#fastfields.cupy.sym_invert"><code>sym_invert</code></a>, over whole fields of small symmetric matrices</td>
 </tr>
 <tr>
 <td><strong>Resampling</strong></td>
-<td><code>resample</code> (spline up/down-sampling), <code>restriction</code> (its adjoint), <code>spline_coeff</code> (coefficient prefilter)</td>
+<td><a class="autorefs autorefs-internal" title="resample" href="../api/cupy/#fastfields.cupy.resample"><code>resample</code></a> (spline up- and down-sampling), <a class="autorefs autorefs-internal" title="restriction" href="../api/cupy/#fastfields.cupy.restriction"><code>restriction</code></a> (its adjoint) and <a class="autorefs autorefs-internal" title="spline_coeff" href="../api/cupy/#fastfields.cupy.spline_coeff"><code>spline_coeff</code></a> (the coefficient prefilter)</td>
 </tr>
 <tr>
-<td><strong>Spline gather/scatter</strong></td>
-<td><code>pull</code>, <code>push</code>, <code>count</code>, <code>grad</code></td>
+<td><strong>Spline sampling (pushpull)</strong></td>
+<td><a class="autorefs autorefs-internal" title="pull" href="../api/cupy/#fastfields.cupy.pull"><code>pull</code></a> (gather), <a class="autorefs autorefs-internal" title="push" href="../api/cupy/#fastfields.cupy.push"><code>push</code></a> (scatter), <a class="autorefs autorefs-internal" title="count" href="../api/cupy/#fastfields.cupy.count"><code>count</code></a> and <a class="autorefs autorefs-internal" title="grad" href="../api/cupy/#fastfields.cupy.grad"><code>grad</code></a></td>
 </tr>
 <tr>
 <td><strong>Regularisers</strong></td>
-<td><code>field_*</code> (multi-channel field, per-channel penalties) and <code>flow_*</code> (vector flow, scalar penalties + the Lamé <code>shears</code>/<code>div</code> terms): the operator <code>*_matvec</code>, its diagonal <code>*_diag</code>, its stencil <code>*_kernel</code>, the <code>*_add…</code>/<code>*_sub…</code> accumulate forms of each, the RLS/JRLS-weighted <code>*_rls</code> variants, and the regularised system below</td>
+<td><code>field_*</code> for a multi-channel field, with one penalty per channel, and <code>flow_*</code> for a vector flow, with scalar penalties plus the Lamé <code>shears</code> and <code>div</code> terms. Each family has the operator (<code>*_matvec</code>), its diagonal (<code>*_diag</code>), its stencil (<code>*_kernel</code>), accumulate forms of each (<code>*_add…</code> and <code>*_sub…</code>), weighted variants (<code>*_rls</code>) and the regularised system described below</td>
 </tr>
 </tbody>
 </table>
-<p>Functional wrappers (<code>dt_euclidean</code>, <code>sym_matvec</code>, …) allocate their outputs and
-return new arrays; the trailing-underscore variants (<code>dt_euclidean_</code>,
-<code>sym_solve_</code>, …) write in place. To target a specific stream, wrap the call in a
-<code>with my_stream:</code> block.</p>
+<p>The functions without a trailing underscore allocate their outputs and return
+new arrays. The ones with a trailing underscore (<code>dt_euclidean_</code>, <code>sym_solve_</code>
+and so on) write in place. To run on a specific stream, call the function
+inside a <code>with my_stream:</code> block.</p>
+<p>A <em>field</em> is a multi-channel array with any number of channels. A <em>flow</em> is a
+vector field whose number of channels equals the number of spatial dimensions.
+The regularisers act on the <code>ndim</code> axes just before the channel axis, and
+<code>ndim</code> is not inferred: it defaults to 1, so pass <code>ndim=2</code> for a 2D image.</p>
 <h3 id="solving-the-regularised-system">Solving the regularised system</h3>
-<p>With <code>H</code> the per-voxel data-term Hessian (compact-symmetric packing) and <code>L</code> a
-regulariser:</p>
+<p>Let <code>H</code> be the per-voxel Hessian of a data term, stored as compact-symmetric
+matrices, and <code>L</code> a regulariser. These functions apply and solve the system
+<code>(H + L) x = g</code>:</p>
 <table>
 <thead>
 <tr>
@@ -1294,44 +1297,43 @@ regulariser:</p>
 </thead>
 <tbody>
 <tr>
-<td><code>field_forward</code> / <code>flow_forward</code></td>
+<td><a class="autorefs autorefs-internal" title="field_forward" href="../api/cupy/#fastfields.cupy.field_forward"><code>field_forward</code></a>, <a class="autorefs autorefs-internal" title="flow_forward" href="../api/cupy/#fastfields.cupy.flow_forward"><code>flow_forward</code></a></td>
 <td>apply <code>(H + L) x</code></td>
 </tr>
 <tr>
-<td><code>field_precond</code> / <code>flow_precond</code></td>
-<td>apply <code>(H + diag(L))⁻¹ g</code> (Jacobi)</td>
+<td><a class="autorefs autorefs-internal" title="field_precond" href="../api/cupy/#fastfields.cupy.field_precond"><code>field_precond</code></a>, <a class="autorefs autorefs-internal" title="flow_precond" href="../api/cupy/#fastfields.cupy.flow_precond"><code>flow_precond</code></a></td>
+<td>apply <code>(H + diag(L))⁻¹ g</code>, the Jacobi preconditioner</td>
 </tr>
 <tr>
-<td><code>field_precond_</code> / <code>flow_precond_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_precond_" href="../api/cupy/#fastfields.cupy.field_precond_"><code>field_precond_</code></a>, <a class="autorefs autorefs-internal" title="flow_precond_" href="../api/cupy/#fastfields.cupy.flow_precond_"><code>flow_precond_</code></a></td>
 <td>the same, in place</td>
 </tr>
 <tr>
-<td><code>field_relax</code> / <code>flow_relax</code></td>
-<td>Gauss-Seidel sweeps on <code>(H + L) x = g</code></td>
+<td><a class="autorefs autorefs-internal" title="field_relax" href="../api/cupy/#fastfields.cupy.field_relax"><code>field_relax</code></a>, <a class="autorefs autorefs-internal" title="flow_relax" href="../api/cupy/#fastfields.cupy.flow_relax"><code>flow_relax</code></a></td>
+<td>Gauss-Seidel sweeps on the system</td>
 </tr>
 </tbody>
 </table>
-<p>Each is one fused kernel, so none of them allocates a temporary you then have
-to keep alive until the stream is synchronised.</p>
-<h2 id="what-this-wrapper-does-not-expose">What this wrapper does not expose</h2>
-<p>Of the 58 operations in the underlying C++ hub, this package wraps all but
+<p>Each of these is a single fused kernel, so none of them allocates a temporary
+that you would then have to keep alive until the stream is synchronised.</p>
+<h2 id="what-this-package-does-not-wrap">What this package does not wrap</h2>
+<p>Of the 58 operations of the underlying C++ library, this package wraps all but
 five.</p>
 <p><code>pull_backward</code>, <code>push_backward</code>, <code>count_backward</code> and <code>grad_backward</code> are the
-adjoints of the gather/scatter operators with respect to both the sampled
-field and the sampling coordinates. They exist so an autograd engine can
-differentiate through <code>grid</code> — which only <code>fastfields.torch</code> does. There is no
-automatic differentiation on cupy, so they stay at the raw layer: call
-<code>fastfields.dlpack.pull_backward(...)</code> if you need them.</p>
-<p><code>field_cg</code> — the conjugate-gradient solver — is <strong>CPU-only</strong> in the underlying
-library: its dot products need a device-side reduction the CUDA backend does
-not implement yet (<a href="https://github.com/fastfields/fastfields-lib/issues/34">fastfields-lib#34</a>),
-and the hub rejects CUDA arrays rather than quietly running on the host. A
-<code>fastfields.cupy.field_cg</code> could therefore only ever raise, so there isn't
-one. Use <code>field_relax</code>, which does run on CUDA and solves the same system by
-Gauss-Seidel sweeps.</p>
-<p><code>tests/test_api_coverage.py</code> fails if that list ever changes by accident, and
-it runs without a GPU.</p>
-<p>See the <a href="../api/cupy/">API reference</a> for full signatures and options.</p>
+adjoints of the sampling operators with respect to both the sampled field and
+the sampling coordinates. They exist so that an autograd engine can
+differentiate through <code>grid</code>, which only <code>fastfields.torch</code> does. CuPy has no
+automatic differentiation, so they stay at the raw layer, as
+<code>fastfields.dlpack.pull_backward(...)</code> and so on.</p>
+<p><code>field_cg</code>, the conjugate-gradient solver, is CPU-only in the underlying
+library. Its dot products need a device-side reduction that the CUDA backend
+does not implement yet (<a href="https://github.com/fastfields/fastfields-lib/issues/34">fastfields-lib#34</a>), and the hub rejects CUDA
+arrays instead of quietly running on the host. A <code>fastfields.cupy.field_cg</code>
+could therefore only ever raise, so there isn't one. Use <code>field_relax</code>, which
+runs on CUDA and solves the same system by Gauss-Seidel sweeps.</p>
+<p><code>tests/test_api_coverage_cupy.py</code> fails if that list ever changes by accident,
+and it runs without a GPU.</p>
+<p>See the <a href="../api/cupy/">API reference</a> for the full signatures.</p>
 
 
 

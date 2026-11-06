@@ -425,6 +425,83 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#distance-transforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Distance transforms
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#positive-definite-linear-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Positive-definite linear algebra
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Resampling
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spline-sampling-pushpull" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Spline sampling (pushpull)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-regularisers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Field regularisers
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flow-regularisers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Flow regularisers
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The module
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fastfields.auto" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1120,6 +1197,83 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#distance-transforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Distance transforms
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#positive-definite-linear-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Positive-definite linear algebra
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Resampling
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spline-sampling-pushpull" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Spline sampling (pushpull)
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-regularisers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Field regularisers
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flow-regularisers" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Flow regularisers
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The module
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fastfields.auto" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1190,8 +1344,342 @@
 
 
 <h1 id="fastfieldsauto"><code>fastfields.auto</code></h1>
-<p>Every operation exposed by <code>fastfields.auto</code>, with its arguments and
-options.</p>
+<p><code>fastfields.auto</code> adds dispatch, not new operations. Each function in the
+tables below forwards to the function of the same name in the backend that
+matches the type of its first array argument, and has that function's
+signature, so an operation is documented on the page of its backend. The
+<a href="../../auto/">overview</a> explains how the dispatch works.</p>
+<p>A backend is listed for an operation when it implements it. Calling an
+operation on an array whose backend is not listed raises <code>NotImplementedError</code>
+naming the backends that are.</p>
+<h2 id="distance-transforms">Distance transforms</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Documented on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dt_euclidean</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_euclidean" href="../numpy/#fastfields.numpy.dt_euclidean">numpy</a>, <a class="autorefs autorefs-internal" title="dt_euclidean" href="../torch/#fastfields.torch.dt_euclidean">torch</a>, <a class="autorefs autorefs-internal" title="dt_euclidean" href="../cupy/#fastfields.cupy.dt_euclidean">cupy</a></td>
+</tr>
+<tr>
+<td><code>dt_euclidean_</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_euclidean_" href="../numpy/#fastfields.numpy.dt_euclidean_">numpy</a>, <a class="autorefs autorefs-internal" title="dt_euclidean_" href="../torch/#fastfields.torch.dt_euclidean_">torch</a>, <a class="autorefs autorefs-internal" title="dt_euclidean_" href="../cupy/#fastfields.cupy.dt_euclidean_">cupy</a></td>
+</tr>
+<tr>
+<td><code>dt_l1</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_l1" href="../numpy/#fastfields.numpy.dt_l1">numpy</a>, <a class="autorefs autorefs-internal" title="dt_l1" href="../torch/#fastfields.torch.dt_l1">torch</a>, <a class="autorefs autorefs-internal" title="dt_l1" href="../cupy/#fastfields.cupy.dt_l1">cupy</a></td>
+</tr>
+<tr>
+<td><code>dt_l1_</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_l1_" href="../numpy/#fastfields.numpy.dt_l1_">numpy</a>, <a class="autorefs autorefs-internal" title="dt_l1_" href="../torch/#fastfields.torch.dt_l1_">torch</a>, <a class="autorefs autorefs-internal" title="dt_l1_" href="../cupy/#fastfields.cupy.dt_l1_">cupy</a></td>
+</tr>
+<tr>
+<td><code>dt_spline_table</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_spline_table" href="../numpy/#fastfields.numpy.dt_spline_table">numpy</a>, <a class="autorefs autorefs-internal" title="dt_spline_table" href="../torch/#fastfields.torch.dt_spline_table">torch</a>, <a class="autorefs autorefs-internal" title="dt_spline_table" href="../cupy/#fastfields.cupy.dt_spline_table">cupy</a></td>
+</tr>
+<tr>
+<td><code>dt_spline_brent</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_spline_brent" href="../numpy/#fastfields.numpy.dt_spline_brent">numpy</a>, <a class="autorefs autorefs-internal" title="dt_spline_brent" href="../torch/#fastfields.torch.dt_spline_brent">torch</a>, <a class="autorefs autorefs-internal" title="dt_spline_brent" href="../cupy/#fastfields.cupy.dt_spline_brent">cupy</a></td>
+</tr>
+<tr>
+<td><code>dt_spline_gaussnewton</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_spline_gaussnewton" href="../numpy/#fastfields.numpy.dt_spline_gaussnewton">numpy</a>, <a class="autorefs autorefs-internal" title="dt_spline_gaussnewton" href="../torch/#fastfields.torch.dt_spline_gaussnewton">torch</a>, <a class="autorefs autorefs-internal" title="dt_spline_gaussnewton" href="../cupy/#fastfields.cupy.dt_spline_gaussnewton">cupy</a></td>
+</tr>
+<tr>
+<td><code>dt_mesh</code></td>
+<td><a class="autorefs autorefs-internal" title="dt_mesh" href="../numpy/#fastfields.numpy.dt_mesh">numpy</a>, <a class="autorefs autorefs-internal" title="dt_mesh" href="../torch/#fastfields.torch.dt_mesh">torch</a>, <a class="autorefs autorefs-internal" title="dt_mesh" href="../cupy/#fastfields.cupy.dt_mesh">cupy</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="positive-definite-linear-algebra">Positive-definite linear algebra</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Documented on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sym_matvec</code></td>
+<td><a class="autorefs autorefs-internal" title="sym_matvec" href="../numpy/#fastfields.numpy.sym_matvec">numpy</a>, <a class="autorefs autorefs-internal" title="sym_matvec" href="../torch/#fastfields.torch.sym_matvec">torch</a>, <a class="autorefs autorefs-internal" title="sym_matvec" href="../cupy/#fastfields.cupy.sym_matvec">cupy</a></td>
+</tr>
+<tr>
+<td><code>sym_matvec_backward</code></td>
+<td><a class="autorefs autorefs-internal" title="sym_matvec_backward" href="../numpy/#fastfields.numpy.sym_matvec_backward">numpy</a>, <a class="autorefs autorefs-internal" title="sym_matvec_backward" href="../cupy/#fastfields.cupy.sym_matvec_backward">cupy</a></td>
+</tr>
+<tr>
+<td><code>sym_addmatvec_</code></td>
+<td><a class="autorefs autorefs-internal" title="sym_addmatvec_" href="../numpy/#fastfields.numpy.sym_addmatvec_">numpy</a>, <a class="autorefs autorefs-internal" title="sym_addmatvec_" href="../torch/#fastfields.torch.sym_addmatvec_">torch</a>, <a class="autorefs autorefs-internal" title="sym_addmatvec_" href="../cupy/#fastfields.cupy.sym_addmatvec_">cupy</a></td>
+</tr>
+<tr>
+<td><code>sym_submatvec_</code></td>
+<td><a class="autorefs autorefs-internal" title="sym_submatvec_" href="../numpy/#fastfields.numpy.sym_submatvec_">numpy</a>, <a class="autorefs autorefs-internal" title="sym_submatvec_" href="../torch/#fastfields.torch.sym_submatvec_">torch</a>, <a class="autorefs autorefs-internal" title="sym_submatvec_" href="../cupy/#fastfields.cupy.sym_submatvec_">cupy</a></td>
+</tr>
+<tr>
+<td><code>sym_solve</code></td>
+<td><a class="autorefs autorefs-internal" title="sym_solve" href="../numpy/#fastfields.numpy.sym_solve">numpy</a>, <a class="autorefs autorefs-internal" title="sym_solve" href="../torch/#fastfields.torch.sym_solve">torch</a>, <a class="autorefs autorefs-internal" title="sym_solve" href="../cupy/#fastfields.cupy.sym_solve">cupy</a></td>
+</tr>
+<tr>
+<td><code>sym_solve_</code></td>
+<td><a class="autorefs autorefs-internal" title="sym_solve_" href="../numpy/#fastfields.numpy.sym_solve_">numpy</a>, <a class="autorefs autorefs-internal" title="sym_solve_" href="../torch/#fastfields.torch.sym_solve_">torch</a>, <a class="autorefs autorefs-internal" title="sym_solve_" href="../cupy/#fastfields.cupy.sym_solve_">cupy</a></td>
+</tr>
+<tr>
+<td><code>sym_invert</code></td>
+<td><a class="autorefs autorefs-internal" title="sym_invert" href="../numpy/#fastfields.numpy.sym_invert">numpy</a>, <a class="autorefs autorefs-internal" title="sym_invert" href="../torch/#fastfields.torch.sym_invert">torch</a>, <a class="autorefs autorefs-internal" title="sym_invert" href="../cupy/#fastfields.cupy.sym_invert">cupy</a></td>
+</tr>
+<tr>
+<td><code>sym_invert_</code></td>
+<td><a class="autorefs autorefs-internal" title="sym_invert_" href="../numpy/#fastfields.numpy.sym_invert_">numpy</a>, <a class="autorefs autorefs-internal" title="sym_invert_" href="../torch/#fastfields.torch.sym_invert_">torch</a>, <a class="autorefs autorefs-internal" title="sym_invert_" href="../cupy/#fastfields.cupy.sym_invert_">cupy</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="resampling">Resampling</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Documented on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>resample</code></td>
+<td><a class="autorefs autorefs-internal" title="resample" href="../numpy/#fastfields.numpy.resample">numpy</a>, <a class="autorefs autorefs-internal" title="resample" href="../torch/#fastfields.torch.resample">torch</a>, <a class="autorefs autorefs-internal" title="resample" href="../cupy/#fastfields.cupy.resample">cupy</a></td>
+</tr>
+<tr>
+<td><code>restriction</code></td>
+<td><a class="autorefs autorefs-internal" title="restriction" href="../numpy/#fastfields.numpy.restriction">numpy</a>, <a class="autorefs autorefs-internal" title="restriction" href="../torch/#fastfields.torch.restriction">torch</a>, <a class="autorefs autorefs-internal" title="restriction" href="../cupy/#fastfields.cupy.restriction">cupy</a></td>
+</tr>
+<tr>
+<td><code>spline_coeff</code></td>
+<td><a class="autorefs autorefs-internal" title="spline_coeff" href="../numpy/#fastfields.numpy.spline_coeff">numpy</a>, <a class="autorefs autorefs-internal" title="spline_coeff" href="../torch/#fastfields.torch.spline_coeff">torch</a>, <a class="autorefs autorefs-internal" title="spline_coeff" href="../cupy/#fastfields.cupy.spline_coeff">cupy</a></td>
+</tr>
+<tr>
+<td><code>spline_coeff_</code></td>
+<td><a class="autorefs autorefs-internal" title="spline_coeff_" href="../numpy/#fastfields.numpy.spline_coeff_">numpy</a>, <a class="autorefs autorefs-internal" title="spline_coeff_" href="../torch/#fastfields.torch.spline_coeff_">torch</a>, <a class="autorefs autorefs-internal" title="spline_coeff_" href="../cupy/#fastfields.cupy.spline_coeff_">cupy</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="spline-sampling-pushpull">Spline sampling (pushpull)</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Documented on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pull</code></td>
+<td><a class="autorefs autorefs-internal" title="pull" href="../numpy/#fastfields.numpy.pull">numpy</a>, <a class="autorefs autorefs-internal" title="pull" href="../torch/#fastfields.torch.pull">torch</a>, <a class="autorefs autorefs-internal" title="pull" href="../cupy/#fastfields.cupy.pull">cupy</a></td>
+</tr>
+<tr>
+<td><code>push</code></td>
+<td><a class="autorefs autorefs-internal" title="push" href="../numpy/#fastfields.numpy.push">numpy</a>, <a class="autorefs autorefs-internal" title="push" href="../torch/#fastfields.torch.push">torch</a>, <a class="autorefs autorefs-internal" title="push" href="../cupy/#fastfields.cupy.push">cupy</a></td>
+</tr>
+<tr>
+<td><code>count</code></td>
+<td><a class="autorefs autorefs-internal" title="count" href="../numpy/#fastfields.numpy.count">numpy</a>, <a class="autorefs autorefs-internal" title="count" href="../torch/#fastfields.torch.count">torch</a>, <a class="autorefs autorefs-internal" title="count" href="../cupy/#fastfields.cupy.count">cupy</a></td>
+</tr>
+<tr>
+<td><code>grad</code></td>
+<td><a class="autorefs autorefs-internal" title="grad" href="../numpy/#fastfields.numpy.grad">numpy</a>, <a class="autorefs autorefs-internal" title="grad" href="../torch/#fastfields.torch.grad">torch</a>, <a class="autorefs autorefs-internal" title="grad" href="../cupy/#fastfields.cupy.grad">cupy</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="field-regularisers">Field regularisers</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Documented on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>field_matvec</code></td>
+<td><a class="autorefs autorefs-internal" title="field_matvec" href="../numpy/#fastfields.numpy.field_matvec">numpy</a>, <a class="autorefs autorefs-internal" title="field_matvec" href="../torch/#fastfields.torch.field_matvec">torch</a>, <a class="autorefs autorefs-internal" title="field_matvec" href="../cupy/#fastfields.cupy.field_matvec">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_addmatvec</code></td>
+<td><a class="autorefs autorefs-internal" title="field_addmatvec" href="../numpy/#fastfields.numpy.field_addmatvec">numpy</a>, <a class="autorefs autorefs-internal" title="field_addmatvec" href="../torch/#fastfields.torch.field_addmatvec">torch</a>, <a class="autorefs autorefs-internal" title="field_addmatvec" href="../cupy/#fastfields.cupy.field_addmatvec">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_addmatvec_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_addmatvec_" href="../numpy/#fastfields.numpy.field_addmatvec_">numpy</a>, <a class="autorefs autorefs-internal" title="field_addmatvec_" href="../torch/#fastfields.torch.field_addmatvec_">torch</a>, <a class="autorefs autorefs-internal" title="field_addmatvec_" href="../cupy/#fastfields.cupy.field_addmatvec_">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_submatvec</code></td>
+<td><a class="autorefs autorefs-internal" title="field_submatvec" href="../numpy/#fastfields.numpy.field_submatvec">numpy</a>, <a class="autorefs autorefs-internal" title="field_submatvec" href="../torch/#fastfields.torch.field_submatvec">torch</a>, <a class="autorefs autorefs-internal" title="field_submatvec" href="../cupy/#fastfields.cupy.field_submatvec">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_submatvec_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_submatvec_" href="../numpy/#fastfields.numpy.field_submatvec_">numpy</a>, <a class="autorefs autorefs-internal" title="field_submatvec_" href="../torch/#fastfields.torch.field_submatvec_">torch</a>, <a class="autorefs autorefs-internal" title="field_submatvec_" href="../cupy/#fastfields.cupy.field_submatvec_">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_adddiag</code></td>
+<td><a class="autorefs autorefs-internal" title="field_adddiag" href="../numpy/#fastfields.numpy.field_adddiag">numpy</a>, <a class="autorefs autorefs-internal" title="field_adddiag" href="../torch/#fastfields.torch.field_adddiag">torch</a>, <a class="autorefs autorefs-internal" title="field_adddiag" href="../cupy/#fastfields.cupy.field_adddiag">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_adddiag_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_adddiag_" href="../numpy/#fastfields.numpy.field_adddiag_">numpy</a>, <a class="autorefs autorefs-internal" title="field_adddiag_" href="../torch/#fastfields.torch.field_adddiag_">torch</a>, <a class="autorefs autorefs-internal" title="field_adddiag_" href="../cupy/#fastfields.cupy.field_adddiag_">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_subdiag</code></td>
+<td><a class="autorefs autorefs-internal" title="field_subdiag" href="../numpy/#fastfields.numpy.field_subdiag">numpy</a>, <a class="autorefs autorefs-internal" title="field_subdiag" href="../torch/#fastfields.torch.field_subdiag">torch</a>, <a class="autorefs autorefs-internal" title="field_subdiag" href="../cupy/#fastfields.cupy.field_subdiag">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_subdiag_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_subdiag_" href="../numpy/#fastfields.numpy.field_subdiag_">numpy</a>, <a class="autorefs autorefs-internal" title="field_subdiag_" href="../torch/#fastfields.torch.field_subdiag_">torch</a>, <a class="autorefs autorefs-internal" title="field_subdiag_" href="../cupy/#fastfields.cupy.field_subdiag_">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_addkernel</code></td>
+<td><a class="autorefs autorefs-internal" title="field_addkernel" href="../numpy/#fastfields.numpy.field_addkernel">numpy</a>, <a class="autorefs autorefs-internal" title="field_addkernel" href="../torch/#fastfields.torch.field_addkernel">torch</a>, <a class="autorefs autorefs-internal" title="field_addkernel" href="../cupy/#fastfields.cupy.field_addkernel">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_addkernel_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_addkernel_" href="../numpy/#fastfields.numpy.field_addkernel_">numpy</a>, <a class="autorefs autorefs-internal" title="field_addkernel_" href="../torch/#fastfields.torch.field_addkernel_">torch</a>, <a class="autorefs autorefs-internal" title="field_addkernel_" href="../cupy/#fastfields.cupy.field_addkernel_">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_subkernel</code></td>
+<td><a class="autorefs autorefs-internal" title="field_subkernel" href="../numpy/#fastfields.numpy.field_subkernel">numpy</a>, <a class="autorefs autorefs-internal" title="field_subkernel" href="../torch/#fastfields.torch.field_subkernel">torch</a>, <a class="autorefs autorefs-internal" title="field_subkernel" href="../cupy/#fastfields.cupy.field_subkernel">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_subkernel_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_subkernel_" href="../numpy/#fastfields.numpy.field_subkernel_">numpy</a>, <a class="autorefs autorefs-internal" title="field_subkernel_" href="../torch/#fastfields.torch.field_subkernel_">torch</a>, <a class="autorefs autorefs-internal" title="field_subkernel_" href="../cupy/#fastfields.cupy.field_subkernel_">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_relax</code></td>
+<td><a class="autorefs autorefs-internal" title="field_relax" href="../numpy/#fastfields.numpy.field_relax">numpy</a>, <a class="autorefs autorefs-internal" title="field_relax" href="../torch/#fastfields.torch.field_relax">torch</a>, <a class="autorefs autorefs-internal" title="field_relax" href="../cupy/#fastfields.cupy.field_relax">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_cg</code></td>
+<td><a class="autorefs autorefs-internal" title="field_cg" href="../numpy/#fastfields.numpy.field_cg">numpy</a></td>
+</tr>
+<tr>
+<td><code>field_matvec_rls</code></td>
+<td><a class="autorefs autorefs-internal" title="field_matvec_rls" href="../numpy/#fastfields.numpy.field_matvec_rls">numpy</a>, <a class="autorefs autorefs-internal" title="field_matvec_rls" href="../torch/#fastfields.torch.field_matvec_rls">torch</a>, <a class="autorefs autorefs-internal" title="field_matvec_rls" href="../cupy/#fastfields.cupy.field_matvec_rls">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_diag_rls</code></td>
+<td><a class="autorefs autorefs-internal" title="field_diag_rls" href="../numpy/#fastfields.numpy.field_diag_rls">numpy</a>, <a class="autorefs autorefs-internal" title="field_diag_rls" href="../torch/#fastfields.torch.field_diag_rls">torch</a>, <a class="autorefs autorefs-internal" title="field_diag_rls" href="../cupy/#fastfields.cupy.field_diag_rls">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_relax_rls</code></td>
+<td><a class="autorefs autorefs-internal" title="field_relax_rls" href="../numpy/#fastfields.numpy.field_relax_rls">numpy</a>, <a class="autorefs autorefs-internal" title="field_relax_rls" href="../torch/#fastfields.torch.field_relax_rls">torch</a>, <a class="autorefs autorefs-internal" title="field_relax_rls" href="../cupy/#fastfields.cupy.field_relax_rls">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_precond</code></td>
+<td><a class="autorefs autorefs-internal" title="field_precond" href="../numpy/#fastfields.numpy.field_precond">numpy</a>, <a class="autorefs autorefs-internal" title="field_precond" href="../torch/#fastfields.torch.field_precond">torch</a>, <a class="autorefs autorefs-internal" title="field_precond" href="../cupy/#fastfields.cupy.field_precond">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_precond_</code></td>
+<td><a class="autorefs autorefs-internal" title="field_precond_" href="../numpy/#fastfields.numpy.field_precond_">numpy</a>, <a class="autorefs autorefs-internal" title="field_precond_" href="../cupy/#fastfields.cupy.field_precond_">cupy</a></td>
+</tr>
+<tr>
+<td><code>field_forward</code></td>
+<td><a class="autorefs autorefs-internal" title="field_forward" href="../numpy/#fastfields.numpy.field_forward">numpy</a>, <a class="autorefs autorefs-internal" title="field_forward" href="../torch/#fastfields.torch.field_forward">torch</a>, <a class="autorefs autorefs-internal" title="field_forward" href="../cupy/#fastfields.cupy.field_forward">cupy</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="flow-regularisers">Flow regularisers</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Documented on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>flow_matvec</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_matvec" href="../numpy/#fastfields.numpy.flow_matvec">numpy</a>, <a class="autorefs autorefs-internal" title="flow_matvec" href="../torch/#fastfields.torch.flow_matvec">torch</a>, <a class="autorefs autorefs-internal" title="flow_matvec" href="../cupy/#fastfields.cupy.flow_matvec">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_addmatvec</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_addmatvec" href="../numpy/#fastfields.numpy.flow_addmatvec">numpy</a>, <a class="autorefs autorefs-internal" title="flow_addmatvec" href="../torch/#fastfields.torch.flow_addmatvec">torch</a>, <a class="autorefs autorefs-internal" title="flow_addmatvec" href="../cupy/#fastfields.cupy.flow_addmatvec">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_addmatvec_</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_addmatvec_" href="../numpy/#fastfields.numpy.flow_addmatvec_">numpy</a>, <a class="autorefs autorefs-internal" title="flow_addmatvec_" href="../torch/#fastfields.torch.flow_addmatvec_">torch</a>, <a class="autorefs autorefs-internal" title="flow_addmatvec_" href="../cupy/#fastfields.cupy.flow_addmatvec_">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_submatvec</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_submatvec" href="../numpy/#fastfields.numpy.flow_submatvec">numpy</a>, <a class="autorefs autorefs-internal" title="flow_submatvec" href="../torch/#fastfields.torch.flow_submatvec">torch</a>, <a class="autorefs autorefs-internal" title="flow_submatvec" href="../cupy/#fastfields.cupy.flow_submatvec">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_submatvec_</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_submatvec_" href="../numpy/#fastfields.numpy.flow_submatvec_">numpy</a>, <a class="autorefs autorefs-internal" title="flow_submatvec_" href="../torch/#fastfields.torch.flow_submatvec_">torch</a>, <a class="autorefs autorefs-internal" title="flow_submatvec_" href="../cupy/#fastfields.cupy.flow_submatvec_">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_adddiag</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_adddiag" href="../numpy/#fastfields.numpy.flow_adddiag">numpy</a>, <a class="autorefs autorefs-internal" title="flow_adddiag" href="../torch/#fastfields.torch.flow_adddiag">torch</a>, <a class="autorefs autorefs-internal" title="flow_adddiag" href="../cupy/#fastfields.cupy.flow_adddiag">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_adddiag_</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_adddiag_" href="../numpy/#fastfields.numpy.flow_adddiag_">numpy</a>, <a class="autorefs autorefs-internal" title="flow_adddiag_" href="../torch/#fastfields.torch.flow_adddiag_">torch</a>, <a class="autorefs autorefs-internal" title="flow_adddiag_" href="../cupy/#fastfields.cupy.flow_adddiag_">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_subdiag</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_subdiag" href="../numpy/#fastfields.numpy.flow_subdiag">numpy</a>, <a class="autorefs autorefs-internal" title="flow_subdiag" href="../torch/#fastfields.torch.flow_subdiag">torch</a>, <a class="autorefs autorefs-internal" title="flow_subdiag" href="../cupy/#fastfields.cupy.flow_subdiag">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_subdiag_</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_subdiag_" href="../numpy/#fastfields.numpy.flow_subdiag_">numpy</a>, <a class="autorefs autorefs-internal" title="flow_subdiag_" href="../torch/#fastfields.torch.flow_subdiag_">torch</a>, <a class="autorefs autorefs-internal" title="flow_subdiag_" href="../cupy/#fastfields.cupy.flow_subdiag_">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_addkernel</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_addkernel" href="../numpy/#fastfields.numpy.flow_addkernel">numpy</a>, <a class="autorefs autorefs-internal" title="flow_addkernel" href="../torch/#fastfields.torch.flow_addkernel">torch</a>, <a class="autorefs autorefs-internal" title="flow_addkernel" href="../cupy/#fastfields.cupy.flow_addkernel">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_addkernel_</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_addkernel_" href="../numpy/#fastfields.numpy.flow_addkernel_">numpy</a>, <a class="autorefs autorefs-internal" title="flow_addkernel_" href="../torch/#fastfields.torch.flow_addkernel_">torch</a>, <a class="autorefs autorefs-internal" title="flow_addkernel_" href="../cupy/#fastfields.cupy.flow_addkernel_">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_subkernel</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_subkernel" href="../numpy/#fastfields.numpy.flow_subkernel">numpy</a>, <a class="autorefs autorefs-internal" title="flow_subkernel" href="../torch/#fastfields.torch.flow_subkernel">torch</a>, <a class="autorefs autorefs-internal" title="flow_subkernel" href="../cupy/#fastfields.cupy.flow_subkernel">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_subkernel_</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_subkernel_" href="../numpy/#fastfields.numpy.flow_subkernel_">numpy</a>, <a class="autorefs autorefs-internal" title="flow_subkernel_" href="../torch/#fastfields.torch.flow_subkernel_">torch</a>, <a class="autorefs autorefs-internal" title="flow_subkernel_" href="../cupy/#fastfields.cupy.flow_subkernel_">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_relax</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_relax" href="../numpy/#fastfields.numpy.flow_relax">numpy</a>, <a class="autorefs autorefs-internal" title="flow_relax" href="../torch/#fastfields.torch.flow_relax">torch</a>, <a class="autorefs autorefs-internal" title="flow_relax" href="../cupy/#fastfields.cupy.flow_relax">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_matvec_rls</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_matvec_rls" href="../numpy/#fastfields.numpy.flow_matvec_rls">numpy</a>, <a class="autorefs autorefs-internal" title="flow_matvec_rls" href="../torch/#fastfields.torch.flow_matvec_rls">torch</a>, <a class="autorefs autorefs-internal" title="flow_matvec_rls" href="../cupy/#fastfields.cupy.flow_matvec_rls">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_diag_rls</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_diag_rls" href="../numpy/#fastfields.numpy.flow_diag_rls">numpy</a>, <a class="autorefs autorefs-internal" title="flow_diag_rls" href="../torch/#fastfields.torch.flow_diag_rls">torch</a>, <a class="autorefs autorefs-internal" title="flow_diag_rls" href="../cupy/#fastfields.cupy.flow_diag_rls">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_relax_rls</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_relax_rls" href="../numpy/#fastfields.numpy.flow_relax_rls">numpy</a>, <a class="autorefs autorefs-internal" title="flow_relax_rls" href="../torch/#fastfields.torch.flow_relax_rls">torch</a>, <a class="autorefs autorefs-internal" title="flow_relax_rls" href="../cupy/#fastfields.cupy.flow_relax_rls">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_precond</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_precond" href="../numpy/#fastfields.numpy.flow_precond">numpy</a>, <a class="autorefs autorefs-internal" title="flow_precond" href="../torch/#fastfields.torch.flow_precond">torch</a>, <a class="autorefs autorefs-internal" title="flow_precond" href="../cupy/#fastfields.cupy.flow_precond">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_precond_</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_precond_" href="../numpy/#fastfields.numpy.flow_precond_">numpy</a>, <a class="autorefs autorefs-internal" title="flow_precond_" href="../cupy/#fastfields.cupy.flow_precond_">cupy</a></td>
+</tr>
+<tr>
+<td><code>flow_forward</code></td>
+<td><a class="autorefs autorefs-internal" title="flow_forward" href="../numpy/#fastfields.numpy.flow_forward">numpy</a>, <a class="autorefs autorefs-internal" title="flow_forward" href="../torch/#fastfields.torch.flow_forward">torch</a>, <a class="autorefs autorefs-internal" title="flow_forward" href="../cupy/#fastfields.cupy.flow_forward">cupy</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-module">The module</h2>
+<p>The module itself, with <code>dlpack_backend</code> and the re-exported enums:</p>
 
 
 <div class="doc doc-object doc-module">
@@ -1206,67 +1694,59 @@ options.</p>
 
     <div class="doc doc-contents first">
 
-        <p>fastfields.auto: a backend-dispatching interface over fastfields wrappers.</p>
-<p>Every function here dispatches on the <strong>type of the first array argument</strong> and
-forwards the call to the matching backend package:</p>
+        <p>Backend-dispatching interface to the fastfields operators.</p>
+<p>Every function here looks at the type of its first array argument and forwards
+the call, unchanged, to the function of the same name in the matching backend:</p>
 <ul>
-<li><code>numpy.ndarray</code> -&gt; :mod:<code>fastfields.numpy</code></li>
-<li><code>torch.Tensor</code>  -&gt; :mod:<code>fastfields.torch</code></li>
-<li><code>cupy.ndarray</code>  -&gt; :mod:<code>fastfields.cupy</code></li>
+<li><code>numpy.ndarray</code>: <code>fastfields.numpy</code></li>
+<li><code>torch.Tensor</code>: <code>fastfields.torch</code></li>
+<li><code>cupy.ndarray</code>: <code>fastfields.cupy</code></li>
 </ul>
-<p>Backends are imported <strong>lazily</strong>: only the backend for the array type
-actually passed is imported, so <code>fastfields.auto</code> works with any subset
-of the optional backends installed (only <code>fastfields-helpers</code> -- the
-pure-Python enums/normalisers, no compiled extension -- is a hard
-dependency; <code>fastfields.auto</code> never touches the compiled
-<code>fastfields-dlpack</code> bindings directly). A clear error is raised for an
-unknown array type, and a clear <code>ImportError</code> if the required backend
-package (or its own dependency, e.g. torch/cupy) is missing.</p>
-<p>Every backend wrapper package exposes the same canonical <code>dt_*</code> / <code>sym_*</code>
-names, and this module exposes one unified name per operation that maps to each
-backend's function. Arguments are forwarded unchanged, so each dispatched call
-shares the signature of the selected backend's function.</p>
-<p>This namespace requires no particular compute backend -- it runs against
-whatever is installed, and :func:<code>dlpack_backend</code> reports which lane that is
-(<code>"cpu"</code>, <code>"cu126"</code>, ...). That is the whole of its backend handling, by
-contrast with :mod:<code>fastfields.cupy</code>, which refuses to import on a CPU-only
-build, and :mod:<code>fastfields.torch</code>, which refuses a CUDA tensor on one.</p>
-<p>The dispatchers are split by category into :mod:<code>._dt</code> (distance transforms),
-:mod:<code>._sym</code> (compact-symmetric ops), :mod:<code>._resample</code> (resampling / spline
-coefficients), :mod:<code>._pushpull</code> (spline gather/scatter) and :mod:<code>._reg</code>
-(spatial regularisers), all built on the shared machinery in :mod:<code>._util</code>.</p>
-
-
-<details class="what-is-not-dispatched-here,-and-why" open>
-  <summary>What is not dispatched here, and why</summary>
-  <p>This module is a <em>dispatcher</em>: it picks a backend from the type of the first
-array argument and forwards every argument unchanged. Two kinds of operation
-cannot be reached through it, and both are deliberate.</p>
+<p>Arguments and results pass through untouched, so a dispatched call has the
+signature of the backend function it selects. The reference page for each
+operation is the one of its backend; this page documents what is specific to
+dispatching.</p>
+<p>Backends are imported lazily, and only when an array of their type is passed.
+The package therefore works with any subset of them installed. Its only hard
+dependency is <code>fastfields.helpers</code>; apart from <code>dlpack_backend</code>, which imports
+the compiled <code>fastfields-dlpack</code> bindings when it is called, it does not touch
+them. An object of any other type raises
+<code>TypeError</code>, and a backend whose package is missing raises <code>ImportError</code>
+naming what to install.</p>
+<p>This namespace does not need any particular compute backend. <code>dlpack_backend</code>
+reports which one is installed (<code>"cpu"</code>, <code>"cu126"</code> and so on). By contrast,
+<code>fastfields.cupy</code> refuses to import on a CPU-only build and <code>fastfields.torch</code>
+refuses a CUDA tensor on one.</p>
+<div class="admonition note">
+<p class="admonition-title">What is not dispatched here, and why</p>
+<p>Two kinds of operation cannot be reached through this module, and both
+are deliberate.</p>
 <p><strong>Builders that take a shape, not an array.</strong> <code>field_diag</code>, <code>flow_diag</code>,
 <code>field_kernel</code> and <code>flow_kernel</code> allocate their output from a rank and a
-set of penalty weights -- there is no array to dispatch on, so there is
-nothing for this module to decide. Call them on a concrete backend
-(<code>fastfields.numpy.field_diag(...)</code>) and pass the result into the
-dispatched operators. Their <code>*_add</code>/<code>*_sub</code> accumulate forms <em>do</em> take
-an array and are dispatched.</p>
+set of penalty weights, so there is no array to dispatch on. Call them on
+a concrete backend, for example <code>fastfields.numpy.field_diag(...)</code>, and
+pass the result to the dispatched operators. The <code>*_add*</code> and <code>*_sub*</code>
+accumulate forms take an array and are dispatched.</p>
 <p><strong>Adjoints that exist for autograd.</strong> <code>pull_backward</code>, <code>push_backward</code>,
-<code>count_backward</code> and <code>grad_backward</code> are the gradients of the pushpull
-operators; only :mod:<code>fastfields.torch</code> has an autograd engine, and there
-they are wired into the forward op's <code>autograd.Function</code> rather than
-exported. There is nothing uniform to dispatch, so the supported spelling is
-<code>fastfields.auto.pull(...)</code> followed by <code>.backward()</code> on a torch tensor,
-or <code>fastfields.dlpack.pull_backward(...)</code> raw.</p>
-<p>Operations that <em>some</em> backends have are dispatched with a partial table and
-raise <code>NotImplementedError</code> naming the backends that do have them --
-<code>field_cg</code> (CPU-only in the C++ library, so numpy), <code>field_precond_</code> /
-<code>flow_precond_</code> (numpy and cupy), <code>sym_matvec_backward</code> (numpy and cupy).
-Listing them with a clear failure is better than omitting them, which would
-make the asymmetry invisible from here.</p>
-<p>If a backend turns out not to have an operation this module says it does --
-a mixed install, where <code>fastfields.auto</code> is newer than the wrapper -- the
-call raises <code>NotImplementedError</code> saying which package to upgrade, not a
-bare <code>AttributeError</code> from a module the caller never named.</p>
-</details>
+<code>count_backward</code> and <code>grad_backward</code> are the gradients of the sampling
+operators. Only PyTorch has an autograd engine, and there they are wired
+into the forward operation instead of being exported. The supported
+spelling is <code>fastfields.auto.pull(...)</code> followed by <code>.backward()</code> on a
+torch tensor, or <code>fastfields.dlpack.pull_backward(...)</code> for the raw
+function.</p>
+<p>Some operations exist on only some backends. They are dispatched with a
+partial table, and calling one on another backend raises
+<code>NotImplementedError</code> naming the backends that have it: <code>field_cg</code>
+(numpy only, because it is CPU-only in the C++ library),
+<code>field_precond_</code> and <code>flow_precond_</code> (numpy and cupy) and
+<code>sym_matvec_backward</code> (numpy and cupy). Listing them with a clear failure
+keeps the asymmetry visible.</p>
+<p>If a backend lacks an operation that this module says it has, which
+points to a stale or partial installation, the call raises
+<code>NotImplementedError</code> saying so, not a bare <code>AttributeError</code> from a module
+the caller never named.</p>
+</div>
+
 
 
 
@@ -1303,7 +1783,62 @@ bare <code>AttributeError</code> from a module the caller never named.</p>
 
 
 
-        <p>Boundary condition (passed as the <code>bound</code> argument).</p>
+        <p>Boundary condition, applied to every spatial axis.</p>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Value</th>
+<th>Beyond the last voxel, the signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Zero</code></td>
+<td>0</td>
+<td>is zero</td>
+</tr>
+<tr>
+<td><code>Replicate</code></td>
+<td>1</td>
+<td>repeats the last voxel (coordinates are clipped)</td>
+</tr>
+<tr>
+<td><code>DCT1</code></td>
+<td>2</td>
+<td>is symmetric about the centre of the last voxel</td>
+</tr>
+<tr>
+<td><code>DCT2</code></td>
+<td>3</td>
+<td>is symmetric about the edge of the last voxel</td>
+</tr>
+<tr>
+<td><code>DST1</code></td>
+<td>4</td>
+<td>is antisymmetric about the centre of the last voxel</td>
+</tr>
+<tr>
+<td><code>DST2</code></td>
+<td>5</td>
+<td>is antisymmetric about the edge of the last voxel</td>
+</tr>
+<tr>
+<td><code>DFT</code></td>
+<td>6</td>
+<td>wraps around (circular)</td>
+</tr>
+<tr>
+<td><code>NoCheck</code></td>
+<td>7</td>
+<td>is not handled: coordinates are assumed inbound</td>
+</tr>
+</tbody>
+</table>
+<p><code>DCT2</code> is the Neumann condition and <code>DST2</code> the Dirichlet one.</p>
+<p>The wrappers take it as the <code>bound</code> argument, as an integer, as a member of
+this enum or as a name such as <code>"dct2"</code>; see
+<a class="autorefs autorefs-internal" title="as_bound" href="../helpers/#fastfields.helpers.as_bound"><code>as_bound</code></a>.</p>
 
 
 
@@ -1351,7 +1886,14 @@ bare <code>AttributeError</code> from a module the caller never named.</p>
 
 
 
-        <p>Spline interpolation order (passed as the <code>spline</code> argument).</p>
+        <p>Order of the spline used for interpolation.</p>
+<p>The members are the integers 0 to 7, from <code>Nearest</code> (0), <code>Linear</code> (1),
+<code>Quadratic</code> (2) and <code>Cubic</code> (3) up to <code>FourthOrder</code>, <code>FifthOrder</code>,
+<code>SixthOrder</code> and <code>SeventhOrder</code> (4 to 7).</p>
+<p>The wrappers take it as the <code>order</code> argument, as an integer, as a member of
+this enum or as a name such as <code>"cubic"</code>; see
+<a class="autorefs autorefs-internal" title="as_spline" href="../helpers/#fastfields.helpers.as_spline"><code>as_spline</code></a>. The raw <code>fastfields.dlpack</code>
+bindings and the C++ library call the same argument <code>spline</code>.</p>
 
 
 
@@ -1396,18 +1938,12 @@ bare <code>AttributeError</code> from a module the caller never named.</p>
 
     <div class="doc doc-contents ">
 
-        <p>Report the compute backend of the installed compiled bindings.</p>
-<p><code>fastfields.auto</code> works against whichever backend is installed and
-never requires a particular one, so -- unlike
-:mod:<code>fastfields.cupy</code> (which refuses to import on a CPU-only build) and
-:mod:<code>fastfields.torch</code> (which refuses a CUDA tensor on one) -- it only
-reports. This is the one place to ask "which lane did I end up on?"
-without knowing which wrapper to interrogate.</p>
-<p>It is a function rather than a module attribute mirroring
-<code>fastfields.dlpack.backend</code> on purpose: <code>fastfields.auto</code> must not
-import the compiled bindings at import time (it dispatches lazily and is
-usable with no array backend at all), and a module attribute would have to
-be computed at import.</p>
+        <p>Report the compute backend of the installed <code>fastfields-dlpack</code>.</p>
+<p>This namespace works with whatever backend is installed and never insists
+on a particular one; this is the place to ask which one that is, without
+knowing which wrapper to interrogate. It is a function and not a module
+attribute so that importing <code>fastfields.auto</code> does not have to import the
+compiled bindings.</p>
 
 
     <p><span class="doc-section-title">Returns:</span></p>
@@ -1425,10 +1961,9 @@ be computed at import.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p><code>"cpu"</code>, <code>"cu126"</code>, ... for a labelled build of
-<code>fastfields-dlpack</code>; <code>None</code> if the installed build carries no
-label (an unversioned source checkout) or if <code>fastfields.dlpack</code>
-cannot be imported at all.</p>
+                <p><code>"cpu"</code>, <code>"cu126"</code> and so on for a labelled build. <code>None</code> if the build
+carries no label (an unversioned source checkout), or if
+<code>fastfields.dlpack</code> cannot be imported at all.</p>
               </div>
             </td>
           </tr>
