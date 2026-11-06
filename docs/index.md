@@ -107,7 +107,6 @@ the native library are released separately.
 | `fastfields[numpy]` | `fastfields.numpy` | ✓ CPU | [numpy](python/numpy/) |
 | `fastfields[torch]` | `fastfields.torch` | ✓ CPU | [torch](python/torch/) |
 | `fastfields[cupy]` | `fastfields.cupy` | needs a CUDA build ([roadmap](#roadmap)) | [cupy](python/cupy/) |
-| `fastfields` | `fastfields.helpers` | ✓ pure Python | [helpers](python/helpers/) |
 | `fastfields-dlpack` | `fastfields.dlpack` | ✓ CPU | [dlpack](dlpack/) |
 | — (built from source) | `libfastfields.so` | ✓ CPU | [lib](lib/) |
 
