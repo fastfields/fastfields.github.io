@@ -2745,7 +2745,7 @@ variant.</p>
 
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">dt_euclidean_</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span><span class="p">,</span> <span class="n">voxel_spacing</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#float">float</a></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">dt_euclidean_</span><span class="p">(</span><span class="n">inp_out</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span><span class="p">,</span> <span class="n">voxel_spacing</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#float">float</a></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -2769,7 +2769,7 @@ variant.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>inp</code>
+                <code>inp_out</code>
             </td>
             <td>
                   <code><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></code>
@@ -2819,7 +2819,7 @@ Mutated in place and returned.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p><code>inp</code> (the same tensor object), now holding the distance
+                <p><code>inp_out</code> (the same tensor object), now holding the distance
 transform.</p>
               </div>
             </td>
@@ -2843,7 +2843,7 @@ transform.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If <code>inp</code> is not float32/float64.</p>
+                <p>If <code>inp_out</code> is not float32/float64.</p>
               </div>
             </td>
           </tr>
@@ -2999,7 +2999,7 @@ is left untouched. See :func:<code>dt_l1_</code> for the in-place variant.</p>
 
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">dt_l1_</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span><span class="p">,</span> <span class="n">voxel_spacing</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#float">float</a></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">dt_l1_</span><span class="p">(</span><span class="n">inp_out</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span><span class="p">,</span> <span class="n">voxel_spacing</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#float">float</a></span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3023,7 +3023,7 @@ is left untouched. See :func:<code>dt_l1_</code> for the in-place variant.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>inp</code>
+                <code>inp_out</code>
             </td>
             <td>
                   <code><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></code>
@@ -3073,7 +3073,7 @@ Mutated in place and returned.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p><code>inp</code> (the same tensor object), now holding the distance
+                <p><code>inp_out</code> (the same tensor object), now holding the distance
 transform.</p>
               </div>
             </td>
@@ -3097,7 +3097,7 @@ transform.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If <code>inp</code> is not float32/float64.</p>
+                <p>If <code>inp_out</code> is not float32/float64.</p>
               </div>
             </td>
           </tr>
@@ -5481,20 +5481,20 @@ numpy/cupy wrappers).</p>
 
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">spline_coeff_</span><span class="p">(</span><span class="n">inp</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">bound</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s1">'dct2'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">spline_coeff_</span><span class="p">(</span><span class="n">inp_out</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span><span class="p">,</span> <span class="n">order</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">bound</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s1">'dct2'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
 
         <p>In-place interpolating spline-coefficient prefilter, last axis.</p>
-<p>Differentiable with respect to <code>inp</code> (mirrors :func:<code>spline_coeff</code>):
+<p>Differentiable with respect to <code>inp_out</code> (mirrors :func:<code>spline_coeff</code>):
 the prefilter is linear, so its backward applies the prefilter's
-transpose to the gradient and never reads the pre-mutation <code>inp</code> --
-only the saved <code>order</code>/<code>bound</code> scalars -- so overwriting <code>inp</code> in
+transpose to the gradient and never reads the pre-mutation <code>inp_out</code> --
+only the saved <code>order</code>/<code>bound</code> scalars -- so overwriting <code>inp_out</code> in
 place destroys no information backward needs (see <code>API_CONTRACT.md</code>,
 "In-place policy"). As with any in-place op, a leaf tensor with
 <code>requires_grad=True</code> cannot be mutated (torch's ordinary leaf rule);
-that is checked before <code>inp</code> is touched, so the call raises without
+that is checked before <code>inp_out</code> is touched, so the call raises without
 corrupting it.</p>
 <p>Only the boundary conditions the prefilter actually implements are
 accepted (<code>dct1</code>/<code>dct2</code>/<code>dft</code>/<code>replicate</code>); anything else -- in
@@ -5526,7 +5526,7 @@ particular <code>zero</code> -- raises <code>ValueError</code>.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If <code>inp</code> is a leaf tensor that requires grad.</p>
+                <p>If <code>inp_out</code> is a leaf tensor that requires grad.</p>
               </div>
             </td>
           </tr>
@@ -5547,7 +5547,7 @@ particular <code>zero</code> -- raises <code>ValueError</code>.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>inp</code>
+                <code>inp_out</code>
             </td>
             <td>
                   <code><a class="autorefs autorefs-external" title="torch.Tensor" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor">Tensor</a></code>
@@ -5613,7 +5613,7 @@ particular <code>zero</code> -- raises <code>ValueError</code>.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p><code>inp</code> (the same tensor object), now holding the spline
+                <p><code>inp_out</code> (the same tensor object), now holding the spline
 coefficients.</p>
               </div>
             </td>
